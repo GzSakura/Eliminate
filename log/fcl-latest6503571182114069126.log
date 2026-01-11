@@ -1,0 +1,241 @@
+==================== Basic Information ====================
+FCL Version: 1.2.7.5
+Architecture: arm64
+Android SDK: 36
+Java Version: 21
+Renderer: MobileGlues
+Summarize: Application error, unable to launch, exit code = 1
+==================== Basic Information ====================
+
+
+invoke redirectStdio
+invoke setLogPipeReady
+[FCL Internal] /home/runner/work/FoldCraftLauncher/FoldCraftLauncher/FCLauncher/src/main/jni/fcl/fcl_loader.c:130
+Log pipe ready.
+invoke setFCLNativeWindow
+invoke setEventPipe
+==================== Start Minecraft ====================
+Device: Vivo PD2463 V2463A
+Architecture: arm64
+CPU: SM8750
+Android SDK: 36
+Language: zh_CN
+FCL Version Code: 1275
+==================== Mods ====================
+Eliminate-beta1.1 | eliminate | beta1.1 | FABRIC
+fabric-api-0.141.1+1.21.11 | fabric-api | 0.141.1+1.21.11 | FABRIC
+noisium-neoforge-2.8.4+mc1.21.11 | noisium | 2.8.4+mc1.21.11 | NEO_FORGED
+sodium-fabric-0.8.2+mc1.21.11 | sodium | 0.8.2+mc1.21.11 | FABRIC
+
+==================== Env Map ====================
+Env: PATH=/data/app/~~uGu2C-wrf-fvQc8RqRtHlw==/net.kdt.pojavlaunch.ffmpeg-7s3UGDawmgORbV8h-Q7trw==/lib/arm64:/data/user/0/com.tungsten.fcl/app_runtime/java/jre21/bin:/product/bin:/apex/com.android.runtime/bin:/apex/com.android.art/bin:/apex/com.android.virt/bin:/system_ext/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin
+Env: FCL_VERSION_CODE=1275
+Env: POJAV_RENDERER=opengles3
+Env: POJAV_NATIVEDIR=/data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64
+Env: FORCE_VSYNC=false
+Env: JAVA_HOME=/data/user/0/com.tungsten.fcl/app_runtime/java/jre21
+Env: MOD_ANDROID_RUNTIME=/data/user/0/com.tungsten.fcl/app_runtime_mod
+Env: POJAVEXEC_EGL=libmobileglues.so
+Env: TMPDIR=/data/user/0/com.tungsten.fcl/cache
+Env: LIBGL_ES=3
+Env: LIBGL_EGL=libmobileglues.so
+Env: FCL_NATIVEDIR=/data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64
+Env: DRIVER_PATH=/data/app/~~3xze053f2yvsXscIE-eqMw==/com.mio.plugin.renderer.purplevk2500d.r27.sdk30.a7xx-u0UwwQgtorNLdHpcnM3yCw==/lib/arm64
+Env: LD_LIBRARY_PATH=/data/app/~~uGu2C-wrf-fvQc8RqRtHlw==/net.kdt.pojavlaunch.ffmpeg-7s3UGDawmgORbV8h-Q7trw==/lib/arm64:/system/lib64:/vendor/lib64:/vendor/lib64/hw:/data/app/~~e6bUVTsVMNZljEZzWZiHMw==/com.fcl.plugin.mobileglues-homuvqxZEeO8hRx_7lt64A==/lib/arm64:/data/user/0/com.tungsten.fcl/app_runtime_mod:/data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64
+Env: HOME=/storage/emulated/0/FCL/log
+Env: INST_FABRIC=1
+==================== Env Map ====================
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjli.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/server/libjvm.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libfreetype.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libverify.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjava.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libnet.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libnio.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libawt.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libawt_headless.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libfontmanager.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libsctp.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libnet.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libextnet.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libfreetype.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libverify.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libsyslookup.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjli.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjdwp.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libzip.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libawt.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjaas.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libmanagement_agent.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjimage.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/liblcms.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libnio.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libawt_headless.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libmanagement_ext.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/librmi.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjawt.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libmlib_image.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libmanagement.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjavajpeg.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libj2pkcs11.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libfontmanager.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libprefs.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libdt_socket.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libinstrument.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libj2gss.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjsig.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libjava.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/server/libjvm.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/server/libjsig.so
+DLOPEN: loading /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/libawt_xawt.so
+DLOPEN: loading /data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64/libopenal.so
+DLOPEN: loading /data/app/~~e6bUVTsVMNZljEZzWZiHMw==/com.fcl.plugin.mobileglues-homuvqxZEeO8hRx_7lt64A==/lib/arm64/libspirv-cross-c-shared.so
+Initializing MobileGlues ...
+The Open Source License of MobileGlues: 
+  GNU LGPL-2.1 License
+MG_DIR_PATH = (null)
+[MobileGlues] Setting: enableAngle                 = true
+[MobileGlues] Setting: ignoreError                 = 2
+[MobileGlues] Setting: enableExtComputeShader      = true
+[MobileGlues] Setting: enableExtGL43               = true
+[MobileGlues] Setting: enableExtTimerQuery         = true
+[MobileGlues] Setting: enableExtDirectStateAccess  = false
+[MobileGlues] Setting: maxGlslCacheSize            = 0
+[MobileGlues] Setting: angleDepthClearFixMode      = 0
+[MobileGlues] Setting: bufferCoherentAsFlush       = 0
+[MobileGlues] Setting: customGLVersion             = 4.0.0
+[MobileGlues] Setting: fsr1Setting                 = 0
+EGL initialized successfully
+OpenGL ES Version: OpenGL ES 3.2.0 (320)
+Detected GL_EXT_multi_draw_indirect!
+[MobileGlues] Setting: multidrawMode               = Multidraw indirect
+multidrawMode = Auto
+    -> MultidrawIndirect (Auto detected)
+Working directory: /storage/emulated/0/FCL/.minecraft/versions/1.21.11DMT
+DLOPEN: loading /data/app/~~e6bUVTsVMNZljEZzWZiHMw==/com.fcl.plugin.mobileglues-homuvqxZEeO8hRx_7lt64A==/lib/arm64/libmobileglues.so
+==================== Minecraft Arguments ====================
+Java argument: /data/user/0/com.tungsten.fcl/app_runtime/java/jre21/bin/java
+Java argument: -Djava.awt.headless=false
+Java argument: -Dcacio.managed.screensize=1267x576
+Java argument: -Dcacio.font.fontmanager=sun.awt.X11FontManager
+Java argument: -Dcacio.font.fontscaler=sun.font.FreetypeFontScaler
+Java argument: -Dswing.defaultlaf=javax.swing.plaf.nimbus.NimbusLookAndFeel
+Java argument: -Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit
+Java argument: -Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment
+Java argument: -javaagent:/data/user/0/com.tungsten.fcl/app_runtime/caciocavallo17/cacio-agent.jar
+Java argument: --add-exports=java.desktop/java.awt=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/java.awt.peer=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.awt.image=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.java2d=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/java.awt.dnd.peer=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.awt.event=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.awt.datatransfer=ALL-UNNAMED
+Java argument: --add-exports=java.desktop/sun.font=ALL-UNNAMED
+Java argument: --add-exports=java.base/sun.security.action=ALL-UNNAMED
+Java argument: --add-opens=java.base/java.util=ALL-UNNAMED
+Java argument: --add-opens=java.desktop/java.awt=ALL-UNNAMED
+Java argument: --add-opens=java.desktop/sun.font=ALL-UNNAMED
+Java argument: --add-opens=java.desktop/sun.java2d=ALL-UNNAMED
+Java argument: --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+Java argument: --add-opens=java.base/java.net=ALL-UNNAMED
+Java argument: -Xbootclasspath/a:/data/user/0/com.tungsten.fcl/app_runtime/caciocavallo17/cacio-agent.jar:/data/user/0/com.tungsten.fcl/app_runtime/caciocavallo17/cacio-shared-1.19.1-SNAPSHOT.jar:/data/user/0/com.tungsten.fcl/app_runtime/caciocavallo17/cacio-tta-1.19.1-SNAPSHOT.jar
+Java argument: -Xmx15111m
+Java argument: -Dfile.encoding=UTF-8
+Java argument: -Dstdout.encoding=UTF-8
+Java argument: -Dstderr.encoding=UTF-8
+Java argument: -Djava.rmi.server.useCodebaseOnly=true
+Java argument: -Dcom.sun.jndi.rmi.object.trustURLCodebase=false
+Java argument: -Dcom.sun.jndi.cosnaming.object.trustURLCodebase=false
+Java argument: -Dlog4j2.formatMsgNoLookups=true
+Java argument: -Dlog4j.configurationFile=/storage/emulated/0/FCL/.minecraft/versions/1.21.11DMT/log4j2.xml
+Java argument: -Dminecraft.client.jar=/storage/emulated/0/FCL/.minecraft/versions/1.21.11DMT/1.21.11DMT.jar
+Java argument: -XX:ActiveProcessorCount=8
+Java argument: -Dfml.ignoreInvalidMinecraftCertificates=true
+Java argument: -Dfml.ignorePatchDiscrepancies=true
+Java argument: -Dext.net.resolvPath=/data/user/0/com.tungsten.fcl/app_runtime/java/resolv.conf
+Java argument: -Djava.io.tmpdir=/data/user/0/com.tungsten.fcl/cache/fclauncher
+Java argument: -Dos.name=Linux
+Java argument: -Dos.version=Android-16
+Java argument: -Dorg.lwjgl.opengl.libname=/data/app/~~e6bUVTsVMNZljEZzWZiHMw==/com.fcl.plugin.mobileglues-homuvqxZEeO8hRx_7lt64A==/lib/arm64/libmobileglues.so
+Java argument: -Dorg.lwjgl.freetype.libname=/data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64/libfreetype.so
+Java argument: -Dfml.earlyprogresswindow=false
+Java argument: -Dglfwstub.windowWidth=1267
+Java argument: -Dglfwstub.windowHeight=576
+Java argument: -Dglfwstub.initEgl=false
+Java argument: -Dloader.disable_forked_guis=true
+Java argument: -Duser.home=/storage/emulated/0/FCL/.minecraft
+Java argument: -Duser.language=zh
+Java argument: -Duser.country=CN
+Java argument: -Duser.timezone=Asia/Shanghai
+Java argument: -Dorg.lwjgl.vulkan.libname=libvulkan.so
+Java argument: -Dsodium.checks.issue2561=false
+Java argument: -Djdk.lang.Process.launchMechanism=FORK
+Java argument: -Dcpu.name=SM8750
+Java argument: -Djna.boot.library.path=/data/user/0/com.tungsten.fcl/app_runtime/jna/5.17.0
+Java argument: -javaagent:/data/user/0/com.tungsten.fcl/files/plugins/MioLibPatcher.jar
+Java argument: -Djava.library.path=/data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib:/data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/jli:/data/user/0/com.tungsten.fcl/app_runtime/java/jre21/lib/server:/system/lib64:/vendor/lib64:/vendor/lib64/hw:/data/user/0/com.tungsten.fcl/app_runtime/jna:/data/app/~~e6bUVTsVMNZljEZzWZiHMw==/com.fcl.plugin.mobileglues-homuvqxZEeO8hRx_7lt64A==/lib/arm64:/data/user/0/com.tungsten.fcl/app_runtime_mod:/data/app/~~OVgJi2r8zeMC8gSfzY4y7w==/com.tungsten.fcl-TYJd4SXqcJ_iaXtCXOU9vA==/lib/arm64
+Java argument: -Djna.tmpdir=/data/user/0/com.tungsten.fcl/cache/fclauncher
+Java argument: -Dorg.lwjgl.system.SharedLibraryExtractPath=/data/user/0/com.tungsten.fcl/cache/fclauncher
+Java argument: -Dio.netty.native.workdir=/data/user/0/com.tungsten.fcl/cache/fclauncher
+Java argument: -Dminecraft.launcher.brand=Fold Craft Launcher
+Java argument: -Dminecraft.launcher.version=1.2.7.5
+Java argument: -cp
+Java argument: /data/user/0/com.tungsten.fcl/app_runtime/lwjgl/lwjgl.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/ow2/asm/asm/9.9/asm-9.9.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/ow2/asm/asm-analysis/9.9/asm-analysis-9.9.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/ow2/asm/asm-tree/9.9/asm-tree-9.9.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/ow2/asm/asm-util/9.9/asm-util-9.9.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/fabricmc/sponge-mixin/0.16.5+mixin.0.8.7/sponge-mixin-0.16.5+mixin.0.8.7.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/fabricmc/intermediary/1.21.11/intermediary-1.21.11.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/fabricmc/fabric-loader/0.18.2/fabric-loader-0.18.2.jar:/storage/emulated/0/FCL/.minecraft/libraries/at/yawk/lz4/lz4-java/1.8.1/lz4-java-1.8.1.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/azure/azure-json/1.4.0/azure-json-1.4.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/github/oshi/oshi-core/6.9.0/oshi-core-6.9.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/google/code/gson/gson/2.13.2/gson-2.13.2.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/google/guava/guava/33.5.0-jre/guava-33.5.0-jre.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/ibm/icu/icu4j/77.1/icu4j-77.1.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/microsoft/azure/msal4j/1.23.1/msal4j-1.23.1.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/authlib/7.0.61/authlib-7.0.61.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/blocklist/1.0.10/blocklist-1.0.10.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/brigadier/1.3.10/brigadier-1.3.10.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/datafixerupper/9.0.19/datafixerupper-9.0.19.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/jtracy/1.0.37/jtracy-1.0.37.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/logging/1.6.11/logging-1.6.11.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/patchy/2.2.10/patchy-2.2.10.jar:/storage/emulated/0/FCL/.minecraft/libraries/com/mojang/text2speech/1.18.11/text2speech-1.18.11.jar:/storage/emulated/0/FCL/.minecraft/libraries/commons-codec/commons-codec/1.19.0/commons-codec-1.19.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/commons-io/commons-io/2.20.0/commons-io-2.20.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-buffer/4.2.7.Final/netty-buffer-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-codec-base/4.2.7.Final/netty-codec-base-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-codec-compression/4.2.7.Final/netty-codec-compression-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-codec-http/4.2.7.Final/netty-codec-http-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-common/4.2.7.Final/netty-common-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-handler/4.2.7.Final/netty-handler-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-resolver/4.2.7.Final/netty-resolver-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-transport-classes-epoll/4.2.7.Final/netty-transport-classes-epoll-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-transport-classes-kqueue/4.2.7.Final/netty-transport-classes-kqueue-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-transport-native-unix-common/4.2.7.Final/netty-transport-native-unix-common-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/io/netty/netty-transport/4.2.7.Final/netty-transport-4.2.7.Final.jar:/storage/emulated/0/FCL/.minecraft/libraries/it/unimi/dsi/fastutil/8.5.18/fastutil-8.5.18.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/apache/commons/commons-lang3/3.19.0/commons-lang3-3.19.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/apache/logging/log4j/log4j-api/2.25.2/log4j-api-2.25.2.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/apache/logging/log4j/log4j-core/2.25.2/log4j-core-2.25.2.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/apache/logging/log4j/log4j-slf4j2-impl/2.25.2/log4j-slf4j2-impl-2.25.2.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/jcraft/jorbis/0.0.17/jorbis-0.0.17.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/joml/joml/1.10.8/joml-1.10.8.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/storage/emulated/0/FCL/.minecraft/libraries/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/data/user/0/com.tungsten.fcl/files/plugins/MioLaunchWrapper.jar:/storage/emulated/0/FCL/.minecraft/versions/1.21.11DMT/1.21.11DMT.jar
+Java argument: --add-exports
+Java argument: net.fabricmc.loader.impl.launch.knot/net.fabricmc.loader.impl.launch.knot=ALL-UNNAMED
+MainClass: mio.Wrapper
+MainClass: net.fabricmc.loader.impl.launch.knot.KnotClient
+Minecraft argument: --username
+Minecraft argument: DMTREO
+Minecraft argument: --version
+Minecraft argument: 1.21.11DMT
+Minecraft argument: --gameDir
+Minecraft argument: /storage/emulated/0/FCL/.minecraft/versions/1.21.11DMT
+Minecraft argument: --assetsDir
+Minecraft argument: /storage/emulated/0/FCL/.minecraft/assets
+Minecraft argument: --assetIndex
+Minecraft argument: 29
+Minecraft argument: --uuid
+Minecraft argument: a44f5cf6272b458ba2e4c13249cfe2bb
+Minecraft argument: --accessToken
+Minecraft argument: ***
+Minecraft argument: --clientId
+Minecraft argument: ${clientid}
+Minecraft argument: --xuid
+Minecraft argument: ${auth_xuid}
+Minecraft argument: --versionType
+Minecraft argument: Fold Craft Launcher
+Minecraft argument: --width
+Minecraft argument: 1267
+Minecraft argument: --height
+Minecraft argument: 576
+Hook success
+[FCL Internal] /home/runner/work/FoldCraftLauncher/FoldCraftLauncher/FCLauncher/src/main/jni/pojav/jre_launcher.c:220
+Done processing args
+[FCL Internal] /home/runner/work/FoldCraftLauncher/FoldCraftLauncher/FCLauncher/src/main/jni/pojav/jre_launcher.c:146
+Found JLI lib
+[FCL Internal] /home/runner/work/FoldCraftLauncher/FoldCraftLauncher/FCLauncher/src/main/jni/pojav/jre_launcher.c:158
+Calling JLI_Launch
+[MioPatcher]: MioPatcher is running!
+[12:42:13] [main/INFO]: Loading Minecraft 1.21.11 with Fabric Loader 0.18.2
+[12:42:14] [ForkJoinPool-1-worker-4/WARN]: Mod eliminate uses the version beta1.1 which isn't compatible with Loader's extended semantic version format (Could not parse version number component 'beta1'!), SemVer is recommended for reliably evaluating dependencies and prioritizing newer version
+[12:42:14] [main/WARN]: Mod resolution failed
+[12:42:14] [main/INFO]: Immediate reason: [HARD_DEP_NO_CANDIDATE eliminate beta1.1 {depends fabricloader @ [>=0.18.4]}, ROOT_FORCELOAD_SINGLE eliminate beta1.1]
+[12:42:14] [main/INFO]: Reason: [HARD_DEP eliminate beta1.1 {depends fabricloader @ [>=0.18.4]}]
+[12:42:14] [main/INFO]: Fix: add [], remove [], replace [[fabricloader 0.18.2] -> add:fabricloader 0.18.4 ([[0.18.4,∞)])]
+[12:42:14] [main/ERROR]: Incompatible mods found!
+net.fabricmc.loader.impl.FormattedException: Some of your mods are incompatible with the game or each other!
+确定了一种可能的解决方法，这样做可能会解决你的问题：
+	 - 将 模组 'Fabric Loader' (fabricloader) 0.18.2 替换为 0.18.4 及以上版本。
+更多信息：
+	 - 模组 'Eliminate' (eliminate) beta1.1 需要 模组 'Fabric Loader' (fabricloader) 的 0.18.4 及以上版本，但已经安装了的版本 0.18.2 不对！
+	at net.fabricmc.loader.impl.FormattedException.ofLocalized(FormattedException.java:51)
+	at net.fabricmc.loader.impl.FabricLoaderImpl.load(FabricLoaderImpl.java:202)
+	at net.fabricmc.loader.impl.launch.knot.Knot.init(Knot.java:142)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:66)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at mio.Wrapper.main(Wrapper.java:21)
+OpenJDK exited with code : 1

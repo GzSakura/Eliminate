@@ -1,0 +1,7 @@
+{
+  "config.eliminate.title": "Eliminate 配置",
+  "config.eliminate.category.general": "常规设置",
+  "config.eliminate.option.enabled": "启用垂直剔除",
+  "config.eliminate.option.cullingDistance": "垂直剔除距离",
+  "config.eliminate.option.debugMode": "调试模式"
+}

@@ -1,6 +1,7 @@
 package dev.miitong.eliminate.mixin.client;
 
 import dev.miitong.eliminate.client.EliminateClient;
+import dev.miitong.eliminate.config.EliminateConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -62,6 +63,9 @@ public class MixinGraphOcclusionCuller {
 
     @Inject(method = "isOccluded", at = @At("HEAD"), cancellable = true)
     public void onIsOccluded(int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
+        EliminateConfig config = EliminateConfig.getInstance();
+        if (!config.enabled) return;
+
         // Logic ported from MixinOctreeLeaf
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null || client.world == null) return;
@@ -69,7 +73,7 @@ public class MixinGraphOcclusionCuller {
         // Disable culling during shadow pass to prevent shadow artifacts
         if (EliminateClient.isRenderingShadowPass()) return;
         
-        if (EliminateClient.DEBUG) EliminateClient.TOTAL_CHECKED++;
+        if (config.debugMode) EliminateClient.TOTAL_CHECKED++;
 
         if (cachedWorld != client.world) {
             cachedWorld = client.world;
@@ -105,7 +109,7 @@ public class MixinGraphOcclusionCuller {
                 double maxDot = dxTest * forwardX + dzTest * forwardZ;
                 double testDist = Math.hypot(dxTest, dzTest);
                 if (testDist >= 1.0E-6 && maxDot < -0.35 * testDist) {
-                    if (EliminateClient.DEBUG) {
+                    if (config.debugMode) {
                         EliminateClient.CULLED_COUNT++;
                         EliminateClient.CULLED_BACK++;
                     }
@@ -147,40 +151,31 @@ public class MixinGraphOcclusionCuller {
             floorY = (short) ((packed >>> 16) & 0xffff);
         }
 
-        // Update player cache (lazy way, using tick count or similar might be better but this is fine)
-        // We don't have frameIndex, so we just check position changes or simple distance
-        // Actually, let's just recalculate for now to be safe, or cache based on player position integer
-        
+        // Update player cache
         int playerX = MathHelper.floor(client.player.getX());
         int playerZ = MathHelper.floor(client.player.getZ());
         
-        // Simple cache: if player block pos changed, re-check underground
-        // But we need cachedPlayerSurfaceY.
-        // Let's just calculate it if we don't have a reliable frame index.
-        // Or better, use a static ticker in EliminateClient to increment a frame ID?
-        // Let's re-calculate for now, it's one raycast per chunk check? No, one raycast per frame if cached.
-        // We can cache it in EliminateClient globally!
-        
-        // For now, let's just do it locally.
         int currentSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
         boolean isUnderground = (int)cameraY < currentSurfaceY - 5;
 
-        if (EliminateClient.DEBUG) {
+        if (config.debugMode) {
              EliminateClient.debugCachedSurfaceY = currentSurfaceY;
              EliminateClient.debugCachedUnderground = isUnderground;
         }
 
-        int cutoffY = floorY - 48; // Using the safe 48 buffer
+        int cullingDist = config.cullingDistance;
+        int cutoffY = floorY - cullingDist;
         boolean shouldCull;
         
         if (!isUnderground) {
             shouldCull = box.maxY < cutoffY;
         } else {
-            shouldCull = box.minY > cameraY + 24 || box.maxY < cameraY - 24;
+            int halfDist = cullingDist / 2;
+            shouldCull = box.minY > cameraY + halfDist || box.maxY < cameraY - halfDist;
         }
 
         if (shouldCull) {
-            if (EliminateClient.DEBUG) {
+            if (config.debugMode) {
                 EliminateClient.CULLED_COUNT++;
                 EliminateClient.CULLED_VERTICAL++;
             }

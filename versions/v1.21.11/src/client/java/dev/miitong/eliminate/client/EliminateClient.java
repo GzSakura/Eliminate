@@ -1,5 +1,6 @@
 package dev.miitong.eliminate.client;
 
+import dev.miitong.eliminate.config.EliminateConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -14,7 +15,6 @@ public class EliminateClient implements ClientModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("Eliminate");
     public static final boolean IRIS_LOADED = FabricLoader.getInstance().isModLoaded("iris");
-    public static boolean DEBUG = false;
     public static int CULLED_COUNT = 0;
     public static int CULLED_VERTICAL = 0;
     public static int CULLED_BACK = 0;
@@ -70,8 +70,9 @@ public class EliminateClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        EliminateConfig.load();
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (DEBUG && client.player != null) {
+            if (EliminateConfig.getInstance().debugMode && client.player != null) {
                 tickCounter++;
                 if (tickCounter >= 20) {
                     float pitch = client.player.getPitch();

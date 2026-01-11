@@ -20,6 +20,9 @@
     ],
     "main": [
       "dev.miitong.eliminate.Eliminate"
+    ],
+    "modmenu": [
+      "dev.miitong.eliminate.client.integration.ModMenuIntegration"
     ]
   },
   "mixins": [

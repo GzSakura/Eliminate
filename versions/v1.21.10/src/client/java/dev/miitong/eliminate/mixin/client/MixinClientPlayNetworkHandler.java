@@ -1,6 +1,7 @@
 package dev.miitong.eliminate.mixin.client;
 
 import dev.miitong.eliminate.client.EliminateClient;
+import dev.miitong.eliminate.config.EliminateConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.text.Text;
@@ -16,11 +17,13 @@ public class MixinClientPlayNetworkHandler {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessage(String content, CallbackInfo ci) {
         if (content.equalsIgnoreCase(".debug")) {
-            EliminateClient.DEBUG = !EliminateClient.DEBUG;
+            EliminateConfig config = EliminateConfig.getInstance();
+            config.debugMode = !config.debugMode;
+            EliminateConfig.save();
             
             MinecraftClient client = MinecraftClient.getInstance();
             if (client.player != null) {
-                Text status = EliminateClient.DEBUG 
+                Text status = config.debugMode 
                     ? Text.literal("Eliminate Debug: ON").formatted(Formatting.GREEN)
                     : Text.literal("Eliminate Debug: OFF").formatted(Formatting.RED);
                 client.player.sendMessage(status, false);

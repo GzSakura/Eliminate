@@ -1,6 +1,7 @@
 package dev.miitong.eliminate.mixin.client;
 
 import dev.miitong.eliminate.client.EliminateClient;
+import dev.miitong.eliminate.config.EliminateConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.chunk.ChunkBuilder;
@@ -59,6 +60,9 @@ public class MixinOctreeLeaf {
 
     @Inject(method = "visit", at = @At("HEAD"), cancellable = true)
     private void onVisit(Octree.Visitor visitor, boolean useCulling, Frustum frustum, int depth, int frameIndex, boolean near, CallbackInfo ci) {
+        EliminateConfig config = EliminateConfig.getInstance();
+        if (!config.enabled) return;
+
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
         if (client.world == null) return;
@@ -66,7 +70,7 @@ public class MixinOctreeLeaf {
 
         if (EliminateClient.isIrisShadowPass(frameIndex)) return;
 
-        if (EliminateClient.DEBUG) EliminateClient.TOTAL_CHECKED++;
+        if (config.debugMode) EliminateClient.TOTAL_CHECKED++;
 
         if (cachedWorld != client.world) {
             cachedWorld = client.world;
@@ -78,6 +82,7 @@ public class MixinOctreeLeaf {
 
         double cameraX = client.player.getX();
         double cameraZ = client.player.getZ();
+        double cameraY = client.player.getEyeY();
 
         if (!near) {
             Vec3d look = client.player.getRotationVec(1.0F);
@@ -96,7 +101,7 @@ public class MixinOctreeLeaf {
                 double maxDot = dxTest * forwardX + dzTest * forwardZ;
                 double testDist = Math.hypot(dxTest, dzTest);
                 if (testDist >= 1.0E-6 && maxDot < -0.35 * testDist) {
-                    if (EliminateClient.DEBUG) {
+                    if (config.debugMode) {
                         EliminateClient.CULLED_COUNT++;
                         EliminateClient.CULLED_BACK++;
                     }
@@ -143,20 +148,19 @@ public class MixinOctreeLeaf {
             floorY = (short) ((packed >>> 16) & 0xffff);
         }
 
-        double cameraY = client.player.getEyeY();
-        int playerY = (int) cameraY;
         boolean shouldCull;
 
-        int cutoffY = floorY - 48;
+        int cullingDist = config.cullingDistance;
+        int cutoffY = floorY - cullingDist;
 
         if (cachedPlayerFrameIndex != frameIndex) {
             cachedPlayerFrameIndex = frameIndex;
             int playerX = MathHelper.floor(client.player.getX());
             int playerZ = MathHelper.floor(client.player.getZ());
             cachedPlayerSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
-            cachedPlayerUnderground = playerY < cachedPlayerSurfaceY - 5;
+            cachedPlayerUnderground = cameraY < (double) (cachedPlayerSurfaceY - 5);
             
-            if (EliminateClient.DEBUG) {
+            if (config.debugMode) {
                 EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
                 EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
             }
@@ -165,11 +169,12 @@ public class MixinOctreeLeaf {
         if (!cachedPlayerUnderground) {
             shouldCull = box.maxY < cutoffY;
         } else {
-            shouldCull = box.minY > playerY + 24 || box.maxY < playerY - 24;
+            int halfDist = cullingDist / 2;
+            shouldCull = box.minY > cameraY + (double) halfDist || box.maxY < cameraY - (double) halfDist;
         }
 
         if (shouldCull) {
-            if (EliminateClient.DEBUG) {
+            if (config.debugMode) {
                 EliminateClient.CULLED_COUNT++;
                 EliminateClient.CULLED_VERTICAL++;
             }

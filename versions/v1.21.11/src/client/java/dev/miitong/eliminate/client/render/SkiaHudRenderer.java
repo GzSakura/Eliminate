@@ -1,6 +1,7 @@
 package dev.miitong.eliminate.client.render;
 
 import dev.miitong.eliminate.client.EliminateClient;
+import dev.miitong.eliminate.config.EliminateConfig;
 import dev.miitong.eliminate.utils.skia.Skia;
 import dev.miitong.eliminate.utils.skia.context.SkiaContext;
 import io.github.humbleui.skija.Font;
@@ -22,7 +23,7 @@ public class SkiaHudRenderer implements HudRenderCallback {
 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
-        if (!EliminateClient.DEBUG) return;
+        if (!EliminateConfig.getInstance().debugMode) return;
 
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;

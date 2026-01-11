@@ -1,0 +1,7 @@
+{
+  "config.eliminate.title": "Eliminate Configuration",
+  "config.eliminate.category.general": "General Settings",
+  "config.eliminate.option.enabled": "Enable Vertical Culling",
+  "config.eliminate.option.cullingDistance": "Vertical Culling Distance",
+  "config.eliminate.option.debugMode": "Debug Mode"
+}

@@ -1,6 +1,7 @@
 package dev.miitong.eliminate.mixin.client;
 
 import dev.miitong.eliminate.client.EliminateClient;
+import dev.miitong.eliminate.config.EliminateConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.chunk.Octree;
@@ -20,13 +21,16 @@ public class MixinOctreeBranch {
 
     @Inject(method = "visit", at = @At("HEAD"), cancellable = true)
     private void onVisit(Octree.Visitor visitor, boolean useCulling, Frustum frustum, int depth, int frameIndex, boolean near, CallbackInfo ci) {
+        EliminateConfig config = EliminateConfig.getInstance();
+        if (!config.enabled) return;
+
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
         if (!useCulling) return;
 
         if (EliminateClient.isIrisShadowPass(frameIndex)) return;
 
-        if (EliminateClient.DEBUG) EliminateClient.TOTAL_CHECKED++;
+        if (config.debugMode) EliminateClient.TOTAL_CHECKED++;
 
         if (near) return;
 
@@ -53,7 +57,7 @@ public class MixinOctreeBranch {
         double testDist = Math.hypot(dxTest, dzTest);
         if (testDist < 1.0E-6) return;
         if (maxDot < -0.35 * testDist) {
-            if (EliminateClient.DEBUG) {
+            if (config.debugMode) {
                 EliminateClient.CULLED_COUNT++;
                 EliminateClient.CULLED_BACK++;
             }

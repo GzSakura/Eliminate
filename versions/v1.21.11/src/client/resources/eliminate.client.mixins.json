@@ -6,7 +6,8 @@
   "client": [
     "MixinOctreeBranch",
     "MixinOctreeLeaf",
-    "MixinClientPlayNetworkHandler"
+    "MixinClientPlayNetworkHandler",
+    "MixinGraphOcclusionCuller"
   ],
   "injectors": {
     "defaultRequire": 1

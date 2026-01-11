@@ -20,7 +20,7 @@ gamma:0.5
 guiScale:2
 maxAnisotropyBit:1
 textureFiltering:1
-maxFps:120
+maxFps:260
 improvedTransparency:false
 inactivityFpsLimit:"afk"
 mipmapLevels:4
@@ -30,7 +30,7 @@ reducedDebugInfo:false
 renderClouds:"true"
 cloudRange:64
 renderDistance:16
-simulationDistance:32
+simulationDistance:10
 screenEffectScale:1.0
 soundDevice:""
 vignette:true

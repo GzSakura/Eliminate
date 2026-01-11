@@ -23,8 +23,8 @@ public class MixinOctreeBranch {
         if (client.player == null) return;
 
         double cameraY = client.player.getEyeY();
-        double minSafe = cameraY - 64.0;
-        double maxSafe = cameraY + 64.0;
+        double minSafe = cameraY - 512.0;
+        double maxSafe = cameraY + 512.0;
 
         if (dev.miitong.eliminate.client.EliminateClient.DEBUG) {
             dev.miitong.eliminate.client.EliminateClient.TOTAL_CHECKED++;

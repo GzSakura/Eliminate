@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "eliminate",
-  "version": "beta1.0",
+  "version": "beta1.1",
   "name": "Eliminate",
   "description": "Vertical Chunk Culling for performance optimization.",
   "authors": [
     "GZ_Sakura"
   ],
   "contact": {},
-  "license": "All-Rights-Reserved",
+  "license": "GPL-3.0-or-later",
   "icon": "assets/eliminate/icon.jpg",
   "environment": "client",
   "entrypoints": {

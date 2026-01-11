@@ -4,7 +4,7 @@
 
 ## Features
 
-- **Vertical Chunk Culling**: Automatically stops rendering chunks that are vertically distant from the player (more than 64 blocks above or below), significantly reducing render load.
+- **Vertical Chunk Culling**: Automatically stops rendering chunks that are vertically distant from the player (more than 32 blocks above or below), significantly reducing render load.
 - **Performance Boost**: Especially effective in deep underground or high altitude scenarios.
 
 ## Usage

@@ -1,0 +1,27 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.trae/
+
+# Fabric
+.fabric/
+run/
+
+# Java
+*.class
+*.jar
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# User-specific rules
+.trae/

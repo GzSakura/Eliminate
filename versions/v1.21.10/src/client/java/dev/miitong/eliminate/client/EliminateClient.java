@@ -44,6 +44,10 @@ public class EliminateClient implements ClientModInitializer {
         return cachedShadowPass;
     }
 
+    public static boolean isRenderingShadowPass() {
+        return queryIrisShadowPass();
+    }
+
     private static boolean queryIrisShadowPass() {
         try {
             if (!irisApiResolved) {

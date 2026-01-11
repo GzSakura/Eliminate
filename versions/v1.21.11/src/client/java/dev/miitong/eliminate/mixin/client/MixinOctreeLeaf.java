@@ -112,6 +112,8 @@ public class MixinOctreeLeaf {
             }
         }
 
+        if (near) return; // Skip vertical culling for near chunks to avoid holes
+
         int chunkX = ((int) box.minX) >> 4;
         int chunkZ = ((int) box.minZ) >> 4;
         long key = (((long) chunkX) & 0xffffffffL) | ((((long) chunkZ) & 0xffffffffL) << 32);

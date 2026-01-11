@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.Window;
+import net.minecraft.text.Text;
 
 import java.awt.Color;
 
@@ -55,14 +56,15 @@ public class SkiaHudRenderer implements HudRenderCallback {
         float y = 50;
         float lineHeight = 25;
 
-        String backStatus = Math.abs(client.player.getRotationVec(1.0F).y) > 0.5 ? "Disabled" : String.valueOf(EliminateClient.CULLED_BACK);
+        String disabledStr = Text.translatable("hud.eliminate.disabled").getString();
+        String backStatus = Math.abs(client.player.getRotationVec(1.0F).y) > 0.5 ? disabledStr : String.valueOf(EliminateClient.CULLED_BACK);
 
         String[] lines = {
-            String.format("Eliminate: Total %d", EliminateClient.TOTAL_CHECKED),
-            String.format("Back: %s", backStatus),
-            String.format("Vert: %d", EliminateClient.CULLED_VERTICAL),
-            String.format("Y: %d (Surf: %d)", (int)client.player.getY(), EliminateClient.debugCachedSurfaceY),
-            String.format("Under: %b", EliminateClient.debugCachedUnderground)
+            Text.translatable("hud.eliminate.total", EliminateClient.TOTAL_CHECKED).getString(),
+            Text.translatable("hud.eliminate.back", backStatus).getString(),
+            Text.translatable("hud.eliminate.vert", EliminateClient.CULLED_VERTICAL).getString(),
+            Text.translatable("hud.eliminate.y_info", (int)client.player.getY(), EliminateClient.debugCachedSurfaceY).getString(),
+            Text.translatable("hud.eliminate.underground", EliminateClient.debugCachedUnderground).getString()
         };
 
         for (String line : lines) {

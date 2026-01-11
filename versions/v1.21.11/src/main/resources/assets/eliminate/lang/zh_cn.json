@@ -3,5 +3,11 @@
   "config.eliminate.category.general": "常规设置",
   "config.eliminate.option.enabled": "启用垂直剔除",
   "config.eliminate.option.cullingDistance": "垂直剔除距离",
-  "config.eliminate.option.debugMode": "调试模式"
+  "config.eliminate.option.debugMode": "调试模式",
+  "hud.eliminate.total": "总计: %d",
+  "hud.eliminate.back": "背面剔除: %s",
+  "hud.eliminate.vert": "垂直剔除: %d",
+  "hud.eliminate.y_info": "Y: %d (地表: %d)",
+  "hud.eliminate.underground": "地下状态: %b",
+  "hud.eliminate.disabled": "已禁用"
 }

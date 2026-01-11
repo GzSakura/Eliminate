@@ -12,24 +12,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(targets = "net.caffeinemc.mods.sodium.client.render.chunk.occlusion.GraphOcclusionCuller")
+@Mixin(targets = "net.caffeinemc.mods.sodium.client.render.chunk.occlusion.GraphOcclusionCuller", remap = false)
 public class MixinGraphOcclusionCuller {
+
+    @Unique
+    private static long lastCacheTime = -1;
+    @Unique
+    private static int cachedPlayerSurfaceY;
+    @Unique
+    private static boolean cachedPlayerUnderground;
 
     @Unique
     private static net.minecraft.client.world.ClientWorld cachedWorld;
     @Unique
     private static final java.util.HashMap<Long, Integer> cachedHeights = new java.util.HashMap<>();
-    @Unique
-    private static int cachedPlayerFrameIndex = Integer.MIN_VALUE;
-    @Unique
-    private static int cachedPlayerSurfaceY;
-    @Unique
-    private static boolean cachedPlayerUnderground;
-    
-    // We don't have frameIndex passed to isOccluded easily, but we can track time/tick
-    // Actually, Sodium calls isOccluded every frame for visible chunks? 
-    // Or does it? GraphOcclusionCuller is usually for the *search*.
-    // If it returns true, the node is not added to the queue.
     
     @Unique
     private int getReliableSurfaceY(net.minecraft.client.world.ClientWorld world, int x, int z) {
@@ -78,8 +74,21 @@ public class MixinGraphOcclusionCuller {
         if (cachedWorld != client.world) {
             cachedWorld = client.world;
             cachedHeights.clear();
-            cachedPlayerFrameIndex = Integer.MIN_VALUE;
+            lastCacheTime = -1;
         }
+
+        // Cache player status per tick to avoid expensive surface scans
+        long currentTime = client.world.getTime();
+        if (currentTime != lastCacheTime) {
+            lastCacheTime = currentTime;
+            int playerX = MathHelper.floor(client.player.getX());
+            int playerZ = MathHelper.floor(client.player.getZ());
+            cachedPlayerSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
+            cachedPlayerUnderground = client.player.getEyeY() < (double) (cachedPlayerSurfaceY - 5);
+        }
+
+        int currentSurfaceY = cachedPlayerSurfaceY;
+        boolean isUnderground = cachedPlayerUnderground;
 
         // Reconstruct Box
         double minX = x * 16.0;
@@ -90,7 +99,7 @@ public class MixinGraphOcclusionCuller {
         double cameraX = client.player.getX();
         double cameraZ = client.player.getZ();
         double cameraY = client.player.getEyeY();
-        
+
         // Back Culling
         Vec3d look = client.player.getRotationVec(1.0F);
         // Using the safe 0.5 threshold
@@ -124,7 +133,7 @@ public class MixinGraphOcclusionCuller {
         Integer packed = cachedHeights.get(key);
         int surfaceY;
         int floorY;
-        
+
         if (packed == null) {
             int baseX = x << 4;
             int baseZ = z << 4;
@@ -136,7 +145,7 @@ public class MixinGraphOcclusionCuller {
             for (int tx : xs) {
                 for (int tz : zs) {
                     int s = getReliableSurfaceY(client.world, tx, tz);
-                    int f = s; 
+                    int f = s;
                     if (s < minSurface) minSurface = s;
                     if (f < minFloor) minFloor = f;
                 }
@@ -150,13 +159,6 @@ public class MixinGraphOcclusionCuller {
             surfaceY = (short) (packed & 0xffff);
             floorY = (short) ((packed >>> 16) & 0xffff);
         }
-
-        // Update player cache
-        int playerX = MathHelper.floor(client.player.getX());
-        int playerZ = MathHelper.floor(client.player.getZ());
-        
-        int currentSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
-        boolean isUnderground = (int)cameraY < currentSurfaceY - 5;
 
         if (config.debugMode) {
              EliminateClient.debugCachedSurfaceY = currentSurfaceY;

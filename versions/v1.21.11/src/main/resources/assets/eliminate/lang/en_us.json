@@ -3,5 +3,11 @@
   "config.eliminate.category.general": "General Settings",
   "config.eliminate.option.enabled": "Enable Vertical Culling",
   "config.eliminate.option.cullingDistance": "Vertical Culling Distance",
-  "config.eliminate.option.debugMode": "Debug Mode"
+  "config.eliminate.option.debugMode": "Debug Mode",
+  "hud.eliminate.total": "Total: %d",
+  "hud.eliminate.back": "Back: %s",
+  "hud.eliminate.vert": "Vert: %d",
+  "hud.eliminate.y_info": "Y: %d (Surf: %d)",
+  "hud.eliminate.underground": "Underground: %b",
+  "hud.eliminate.disabled": "Disabled"
 }

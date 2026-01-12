@@ -57,6 +57,9 @@ public class MixinGraphOcclusionCuller {
         return bottomY;
     }
 
+    @Unique
+    private static int lastFrameId = -1;
+
     @Inject(method = "isWithinFrustum", at = @At("HEAD"), cancellable = true)
     private static void onIsWithinFrustum(net.caffeinemc.mods.sodium.client.render.viewport.Viewport viewport, net.caffeinemc.mods.sodium.client.render.chunk.RenderSection section, CallbackInfoReturnable<Boolean> cir) {
         EliminateConfig config = EliminateConfig.getInstance();
@@ -71,32 +74,46 @@ public class MixinGraphOcclusionCuller {
         
         // Disable culling during shadow pass to prevent shadow artifacts
         if (EliminateClient.isRenderingShadowPass()) return;
-        
-        if (config.debugMode) {
-            EliminateClient.TOTAL_CHECKED++;
-            EliminateClient.HUD_TOTAL_CHECKED++;
-            EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
-            EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
+
+        // Follow Sodium's update frame if enabled
+        boolean shouldUpdate;
+        if (config.syncWithSodium) {
+            // Viewport doesn't have a direct getFrameId() in current Sodium version, 
+            // but we can use the world time as a proxy for frame-level sync or 
+            // fallback to tick-based if needed. Actually, we can just use the tick-based logic
+            // with interval 1 for "sync" since Sodium's culler is usually tick/frame bound anyway.
+            long currentTime = client.world.getTime();
+            shouldUpdate = (currentTime != lastCacheTime);
+            if (shouldUpdate) lastCacheTime = currentTime;
+        } else {
+            long currentTime = client.world.getTime();
+            int interval = Math.max(1, 21 - config.updateSpeed);
+            shouldUpdate = (currentTime - lastCacheTime >= interval || lastCacheTime == -1);
+            if (shouldUpdate) lastCacheTime = currentTime;
         }
 
-        if (cachedWorld != client.world) {
-            cachedWorld = client.world;
-            cachedHeights.clear();
-            lastCacheTime = -1;
-        }
-
-        // Cache player status per tick to avoid expensive surface scans
-        long currentTime = client.world.getTime();
-        int interval = Math.max(1, 21 - config.updateSpeed);
-        if (currentTime - lastCacheTime >= interval || lastCacheTime == -1) {
-            lastCacheTime = currentTime;
+        if (shouldUpdate) {
             int playerX = MathHelper.floor(client.player.getX());
             int playerZ = MathHelper.floor(client.player.getZ());
             cachedPlayerSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
             cachedPlayerUnderground = client.player.getEyeY() < (double) (cachedPlayerSurfaceY - 5);
         }
+        
+        if (config.debugMode) {
+             EliminateClient.TOTAL_CHECKED++;
+             EliminateClient.HUD_TOTAL_CHECKED++;
+             EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
+             EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
+         }
 
-        int currentSurfaceY = cachedPlayerSurfaceY;
+         if (cachedWorld != client.world) {
+             cachedWorld = client.world;
+             cachedHeights.clear();
+             lastCacheTime = -1;
+             lastFrameId = -1;
+         }
+
+         int currentSurfaceY = cachedPlayerSurfaceY;
         boolean isUnderground = cachedPlayerUnderground;
 
         // Reconstruct Box for distance checks

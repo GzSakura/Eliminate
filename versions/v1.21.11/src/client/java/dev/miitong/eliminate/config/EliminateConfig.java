@@ -16,7 +16,8 @@ public class EliminateConfig {
     public boolean enabled = true;
     public int cullingDistance = 32;
     public boolean debugMode = false;
-    public int updateSpeed = 10;
+    public int updateSpeed = 20;
+    public boolean syncWithSodium = false;
 
     private static EliminateConfig instance;
 

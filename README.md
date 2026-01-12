@@ -1,43 +1,38 @@
 # Eliminate
 
-**Eliminate** is a lightweight Fabric mod designed to optimize Minecraft client performance by culling invisible vertical chunks.
+**Eliminate** 是一个轻量级的 Fabric 模组，旨在通过剔除玩家视野外不必要的垂直区块来优化渲染性能。
 
-## Features
+## 核心功能
 
-- **Vertical Chunk Culling**: Automatically stops rendering chunks that are vertically distant from the player (more than 32 blocks above or below), significantly reducing render load.
-- **Performance Boost**: Especially effective in deep underground or high altitude scenarios.
+- **垂直区块剔除 (Vertical Culling)**: 自动过滤玩家上方或下方一定距离以外的区块渲染，显著降低显卡负担。
+- **高性能 HUD**: 使用 Skia 引擎渲染实时统计数据（剔除数量、地表高度等）。
+- **配置系统**: 集成 Cloth Config 和 Mod Menu，支持在游戏内自定义剔除距离、更新频率等。
+- **广泛兼容**: 完美兼容 Sodium (钠) 和 Iris (光影)。
 
-## Usage
+## 快速开始
 
-1.  Install [Fabric Loader](https://fabricmc.net/).
-2.  Download the latest release of Eliminate.
-3.  Place the `.jar` file into your `.minecraft/mods` folder.
-4.  Launch the game.
+1. 安装 [Fabric Loader](https://fabricmc.net/)。
+2. 安装依赖：[Cloth Config API](https://modrinth.com/mod/cloth-config)。
+3. 下载最新版本的 Eliminate (beta2)。
+4. 将 `.jar` 文件放入 `.minecraft/mods` 文件夹中。
 
-### Commands
+## 支持版本
 
-- `.debug`: Toggles the debug mode. When enabled, it displays culling statistics in the chat and logs, showing how many chunk sections are being skipped per second.
+- Minecraft 1.21.10
+- Minecraft 1.21.11
 
-## Building from Source
+## 编译项目
 
-Prerequisites: JDK 21
+环境要求: JDK 21
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/GZ-Sakura/Eliminate.git
-    cd Eliminate
-    ```
+```bash
+# 构建所有版本
+.\gradlew.bat build
 
-2.  Build with Gradle:
-    - Windows: `.\gradlew build`
-    - Linux/macOS: `./gradlew build`
+# 仅构建 1.21.11 版本
+.\gradlew.bat :versions:v1.21.11:build
+```
 
-3.  The compiled artifact will be located in `build/libs/`.
+## 开源协议
 
-## License
-
-This project is licensed under the GNU General Public License v3.0 (GPLv3).
-
-Permissions of this strong copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights.
-
-See the [LICENSE](LICENSE) file for details.
+本项目采用 [GNU General Public License v3.0 (GPLv3)](LICENSE) 协议。

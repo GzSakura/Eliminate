@@ -18,12 +18,16 @@ public class EliminateClient implements ClientModInitializer {
     public static int CULLED_COUNT = 0;
     public static int CULLED_VERTICAL = 0;
     public static int CULLED_BACK = 0;
+    public static int CULLED_FOV = 0;
+    public static int CULLED_MOUNTAIN = 0;
     public static int TOTAL_CHECKED = 0;
 
     // HUD specific counters to avoid conflict with tick-based action bar
     public static int HUD_CULLED_COUNT = 0;
     public static int HUD_CULLED_VERTICAL = 0;
     public static int HUD_CULLED_BACK = 0;
+    public static int HUD_CULLED_FOV = 0;
+    public static int HUD_CULLED_MOUNTAIN = 0;
     public static int HUD_TOTAL_CHECKED = 0;
 
     public static boolean debugCachedUnderground = false;
@@ -81,14 +85,12 @@ public class EliminateClient implements ClientModInitializer {
             if (EliminateConfig.getInstance().debugMode && client.player != null) {
                 tickCounter++;
                 if (tickCounter >= 20) {
-                    String disabledStr = Text.translatable("hud.eliminate.disabled").getString();
-                    String backStatus = Math.abs(client.player.getRotationVec(1.0F).y) > 0.5 ? disabledStr : String.valueOf(CULLED_BACK);
-                    
                     // Manual concatenation to avoid placeholder issues
                     String text = Text.translatable("hud.eliminate.actionbar").getString() + 
                         Text.translatable("hud.eliminate.total").getString() + TOTAL_CHECKED + " | " +
-                        Text.translatable("hud.eliminate.back").getString() + backStatus + " | " +
+                        Text.translatable("hud.eliminate.fov").getString() + CULLED_FOV + " | " +
                         Text.translatable("hud.eliminate.vert").getString() + CULLED_VERTICAL + " | " +
+                        Text.translatable("hud.eliminate.mountain").getString() + CULLED_MOUNTAIN + " | " +
                         Text.translatable("hud.eliminate.y_info").getString() + (int)client.player.getY() + " (Surf: " + debugCachedSurfaceY + ") | " +
                         Text.translatable("hud.eliminate.underground").getString() + debugCachedUnderground;
 

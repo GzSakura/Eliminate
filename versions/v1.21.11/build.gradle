@@ -53,6 +53,9 @@ dependencies {
 
     implementation "io.github.humbleui:skija-windows:0.109.0"
     include "io.github.humbleui:skija-windows:0.109.0"
+
+    // Fastutil for optimization (MC already includes it, but for dev consistency)
+    implementation "it.unimi.dsi:fastutil:8.5.13"
 }
 
 processResources {

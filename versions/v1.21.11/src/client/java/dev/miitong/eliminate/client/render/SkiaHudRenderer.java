@@ -60,7 +60,9 @@ public class SkiaHudRenderer implements HudRenderCallback {
         // Reset HUD counters after rendering
         EliminateClient.HUD_CULLED_COUNT = 0;
         EliminateClient.HUD_CULLED_BACK = 0;
+        EliminateClient.HUD_CULLED_FOV = 0;
         EliminateClient.HUD_CULLED_VERTICAL = 0;
+        EliminateClient.HUD_CULLED_MOUNTAIN = 0;
         EliminateClient.HUD_TOTAL_CHECKED = 0;
     }
 
@@ -74,8 +76,9 @@ public class SkiaHudRenderer implements HudRenderCallback {
 
         String[] lines = {
             I18n.translate("hud.eliminate.total") + EliminateClient.HUD_TOTAL_CHECKED,
-            I18n.translate("hud.eliminate.back") + backStatus,
+            I18n.translate("hud.eliminate.fov") + EliminateClient.HUD_CULLED_FOV,
             I18n.translate("hud.eliminate.vert") + EliminateClient.HUD_CULLED_VERTICAL,
+            I18n.translate("hud.eliminate.mountain") + EliminateClient.HUD_CULLED_MOUNTAIN,
             I18n.translate("hud.eliminate.y_info") + (int)client.player.getY() + " (Surf: " + EliminateClient.debugCachedSurfaceY + ")",
             I18n.translate("hud.eliminate.underground") + EliminateClient.debugCachedUnderground
         };

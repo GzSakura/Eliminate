@@ -18,6 +18,9 @@ public class EliminateConfig {
     public boolean debugMode = false;
     public int updateSpeed = 20;
     public boolean syncWithSodium = false;
+    public boolean fovCullingEnabled = true;
+    public boolean aggressiveMountainCulling = true;
+    public boolean transparencyAwareness = true;
 
     private static EliminateConfig instance;
 

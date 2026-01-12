@@ -50,6 +50,24 @@ public class ModMenuIntegration implements ModMenuApi {
                     .setTooltip(Text.translatable("config.eliminate.option.syncWithSodium.tooltip"))
                     .build());
 
+            advanced.addEntry(entryBuilder.startBooleanToggle(Text.translatable("config.eliminate.option.fovCullingEnabled"), config.fovCullingEnabled)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(newValue -> config.fovCullingEnabled = newValue)
+                    .setTooltip(Text.translatable("config.eliminate.option.fovCullingEnabled.tooltip"))
+                    .build());
+
+            advanced.addEntry(entryBuilder.startBooleanToggle(Text.translatable("config.eliminate.option.aggressiveMountainCulling"), config.aggressiveMountainCulling)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(newValue -> config.aggressiveMountainCulling = newValue)
+                    .setTooltip(Text.translatable("config.eliminate.option.aggressiveMountainCulling.tooltip"))
+                    .build());
+
+            advanced.addEntry(entryBuilder.startBooleanToggle(Text.translatable("config.eliminate.option.transparencyAwareness"), config.transparencyAwareness)
+                    .setDefaultValue(true)
+                    .setSaveConsumer(newValue -> config.transparencyAwareness = newValue)
+                    .setTooltip(Text.translatable("config.eliminate.option.transparencyAwareness.tooltip"))
+                    .build());
+
             builder.setSavingRunnable(EliminateConfig::save);
 
             return builder.build();

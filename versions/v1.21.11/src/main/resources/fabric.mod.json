@@ -5,11 +5,12 @@
   "name": "Eliminate",
   "description": "Vertical Chunk Culling for performance optimization.",
   "authors": [
-    "GZ_Sakura"
+    "GZ_Sakura",
+    "leemwood"
   ],
   "contact": {},
   "license": "GPL-3.0-or-later",
-  "icon": "assets/eliminate/icon.jpg",
+  "icon": "assets/eliminate/icon.png",
   "environment": "client",
   "entrypoints": {
     "fabric-datagen": [

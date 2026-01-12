@@ -27,7 +27,7 @@ public class ModMenuIntegration implements ModMenuApi {
                     .build());
 
             general.addEntry(entryBuilder.startIntSlider(Text.translatable("config.eliminate.option.cullingDistance"), config.cullingDistance, 0, 256)
-                    .setDefaultValue(64)
+                    .setDefaultValue(32)
                     .setSaveConsumer(newValue -> config.cullingDistance = newValue)
                     .build());
 

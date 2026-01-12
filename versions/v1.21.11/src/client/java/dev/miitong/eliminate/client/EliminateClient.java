@@ -84,10 +84,15 @@ public class EliminateClient implements ClientModInitializer {
                     String disabledStr = Text.translatable("hud.eliminate.disabled").getString();
                     String backStatus = Math.abs(client.player.getRotationVec(1.0F).y) > 0.5 ? disabledStr : String.valueOf(CULLED_BACK);
                     
-                    Text actionBarText = Text.translatable("hud.eliminate.actionbar", 
-                        TOTAL_CHECKED, backStatus, CULLED_VERTICAL, 
-                        (int)client.player.getY(), debugCachedSurfaceY, debugCachedUnderground)
-                        .formatted(Formatting.YELLOW);
+                    // Manual concatenation to avoid placeholder issues
+                    String text = Text.translatable("hud.eliminate.actionbar").getString() + 
+                        Text.translatable("hud.eliminate.total").getString() + TOTAL_CHECKED + " | " +
+                        Text.translatable("hud.eliminate.back").getString() + backStatus + " | " +
+                        Text.translatable("hud.eliminate.vert").getString() + CULLED_VERTICAL + " | " +
+                        Text.translatable("hud.eliminate.y_info").getString() + (int)client.player.getY() + " (Surf: " + debugCachedSurfaceY + ") | " +
+                        Text.translatable("hud.eliminate.underground").getString() + debugCachedUnderground;
+
+                    Text actionBarText = Text.literal(text).formatted(Formatting.YELLOW);
                     
                     client.player.sendMessage(actionBarText, true);
                     

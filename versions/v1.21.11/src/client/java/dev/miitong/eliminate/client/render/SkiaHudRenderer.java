@@ -73,11 +73,11 @@ public class SkiaHudRenderer implements HudRenderCallback {
         String backStatus = Math.abs(client.player.getRotationVec(1.0F).y) > 0.5 ? disabledStr : String.valueOf(EliminateClient.HUD_CULLED_BACK);
 
         String[] lines = {
-            I18n.translate("hud.eliminate.total", EliminateClient.HUD_TOTAL_CHECKED),
-            I18n.translate("hud.eliminate.back", backStatus),
-            I18n.translate("hud.eliminate.vert", EliminateClient.HUD_CULLED_VERTICAL),
-            I18n.translate("hud.eliminate.y_info", (int)client.player.getY(), EliminateClient.debugCachedSurfaceY),
-            I18n.translate("hud.eliminate.underground", EliminateClient.debugCachedUnderground)
+            I18n.translate("hud.eliminate.total") + EliminateClient.HUD_TOTAL_CHECKED,
+            I18n.translate("hud.eliminate.back") + backStatus,
+            I18n.translate("hud.eliminate.vert") + EliminateClient.HUD_CULLED_VERTICAL,
+            I18n.translate("hud.eliminate.y_info") + (int)client.player.getY() + " (Surf: " + EliminateClient.debugCachedSurfaceY + ")",
+            I18n.translate("hud.eliminate.underground") + EliminateClient.debugCachedUnderground
         };
 
         for (String line : lines) {

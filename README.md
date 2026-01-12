@@ -1,5 +1,7 @@
 # Eliminate
 
+[English](./README_EN.md) | 简体中文
+
 **Eliminate** 是一个轻量级的 Fabric 模组，旨在通过剔除玩家视野外不必要的垂直区块来优化渲染性能。
 
 ## 核心功能

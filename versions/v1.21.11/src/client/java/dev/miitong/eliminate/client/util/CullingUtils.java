@@ -22,7 +22,6 @@ public class CullingUtils {
     private static ClientWorld cachedWorld;
     private static final Long2IntLinkedOpenHashMap cachedHeights = new Long2IntLinkedOpenHashMap();
     private static final Long2BooleanLinkedOpenHashMap cachedTransparency = new Long2BooleanLinkedOpenHashMap();
-    private static final Long2IntLinkedOpenHashMap cachedBiomeAdjustments = new Long2IntLinkedOpenHashMap();
     private static final int MAX_CACHE_SIZE = 1024;
     private static long lastCacheTime = -1;
     private static int cachedPlayerSurfaceY;
@@ -45,8 +44,6 @@ public class CullingUtils {
         cachedBiomeAdjustments.clear();
         cachedWorld = null;
         lastCacheTime = -1;
-        lastFpsUpdateTime = -1;
-        dynamicDistanceAdjusted = 32;
     }
 
     /**
@@ -247,13 +244,7 @@ public class CullingUtils {
             EliminateClient.CACHE_SIZE = cachedHeights.size() + cachedTransparency.size();
         }
 
-        // Get effective culling distance with dynamic adjustment and biome awareness
-        int cullingDist = config.dynamicCullingDistance ? dynamicDistanceAdjusted : config.cullingDistance;
-        
-        // Apply biome-specific adjustment
-        int biomeAdjustment = getBiomeAdjustment(client.world, (chunkX << 4) + 8, (chunkZ << 4) + 8);
-        cullingDist = Math.max(8, cullingDist + biomeAdjustment);
-        
+        int cullingDist = config.cullingDistance;
         if (isNether) {
             // Nether specific: cull if too far above or below
             double diffY = Math.abs(box.getCenter().y - cameraY);

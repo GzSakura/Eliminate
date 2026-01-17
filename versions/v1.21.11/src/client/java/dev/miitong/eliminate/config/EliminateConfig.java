@@ -26,6 +26,12 @@ public class EliminateConfig {
     public int threadPoolSize = -1; // -1 means auto-detect
     public boolean preCalculateChunks = true;
     public int preCalculateRadius = 8;
+    public boolean horizontalCulling = true;
+    public boolean biomeAwareCulling = true;
+    public boolean dynamicCullingDistance = false;
+    public int targetFps = 60;
+    public int minDynamicDistance = 16;
+    public int maxDynamicDistance = 64;
 
     private static EliminateConfig instance;
 

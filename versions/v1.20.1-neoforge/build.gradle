@@ -1,0 +1,73 @@
+plugins {
+    id 'net.neoforged.gradle.userdev' version '7.0.117'
+    id 'maven-publish'
+}
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
+        url = "https://maven.shedaniel.me/"
+    }
+    maven {
+        url = "https://maven.terraformersmc.com/releases/"
+    }
+}
+
+dependencies {
+    neoforge "net.neoforged:neoforge:${project.neoforge_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    modCompileOnly "maven.modrinth:sodium:mc1.20.1-0.4.10+build.27-neoforge"
+
+    // Config
+    modApi("me.shedaniel.cloth:cloth-config-neoforge:15.0.127")
+    modImplementation "com.terraformersmc:modmenu:11.0.1"
+
+    implementation "io.github.humbleui:skija-windows:0.109.0"
+    include "io.github.humbleui:skija-windows:0.109.0"
+
+    // Fastutil for optimization (MC already includes it, but for dev consistency)
+    implementation "it.unimi.dsi:fastutil:8.5.13"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    filteringCharset "UTF-8"
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version,
+                "minecraft_version": project.minecraft_version
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+jar {
+    from("../../LICENSE") {
+        rename { "${it}_${base.archivesName.get()}" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+    repositories {
+        // Add repositories to publish to here.
+    }
+}

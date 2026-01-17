@@ -10,8 +10,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.*;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 
@@ -19,6 +22,7 @@ public class CullingUtils {
     private static ClientWorld cachedWorld;
     private static final Long2IntLinkedOpenHashMap cachedHeights = new Long2IntLinkedOpenHashMap();
     private static final Long2BooleanLinkedOpenHashMap cachedTransparency = new Long2BooleanLinkedOpenHashMap();
+    private static final Long2IntLinkedOpenHashMap cachedBiomeAdjustments = new Long2IntLinkedOpenHashMap();
     private static final int MAX_CACHE_SIZE = 1024;
     private static long lastCacheTime = -1;
     private static int cachedPlayerSurfaceY;
@@ -27,6 +31,9 @@ public class CullingUtils {
     private static boolean isNether;
     private static boolean isEnd;
     private static double fovCosineThreshold;
+    private static long lastFpsUpdateTime = -1;
+    private static double currentFps = 0.0;
+    private static int dynamicDistanceAdjusted = 32;
 
     static {
         cachedHeights.defaultReturnValue(-1);
@@ -35,8 +42,11 @@ public class CullingUtils {
     public static void resetCache() {
         cachedHeights.clear();
         cachedTransparency.clear();
+        cachedBiomeAdjustments.clear();
         cachedWorld = null;
         lastCacheTime = -1;
+        lastFpsUpdateTime = -1;
+        dynamicDistanceAdjusted = 32;
     }
 
     /**
@@ -95,6 +105,11 @@ public class CullingUtils {
             double halfFovRad = Math.toRadians((fov + 20) / 2.0);
             fovCosineThreshold = Math.cos(halfFovRad);
 
+            // Update dynamic culling distance based on FPS
+            if (config.dynamicCullingDistance) {
+                updateDynamicCullingDistance(client);
+            }
+
             if (config.debugMode) {
                 EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
                 EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
@@ -118,6 +133,17 @@ public class CullingUtils {
             if (isChunkTransparent(client.world, chunkX, chunkY, chunkZ)) {
                 return false; 
             }
+        }
+        
+        // 2. Horizontal Culling
+        if (shouldCullHorizontally(box, chunkX, chunkY, chunkZ, client.world, cameraX, cameraY, cameraZ)) {
+            if (config.debugMode) {
+                EliminateClient.CULLED_COUNT++;
+                EliminateClient.CULLED_FOV++;
+                EliminateClient.HUD_CULLED_COUNT++;
+                EliminateClient.HUD_CULLED_FOV++;
+            }
+            return true;
         }
 
         // 2. FOV Culling
@@ -221,7 +247,13 @@ public class CullingUtils {
             EliminateClient.CACHE_SIZE = cachedHeights.size() + cachedTransparency.size();
         }
 
-        int cullingDist = config.cullingDistance;
+        // Get effective culling distance with dynamic adjustment and biome awareness
+        int cullingDist = config.dynamicCullingDistance ? dynamicDistanceAdjusted : config.cullingDistance;
+        
+        // Apply biome-specific adjustment
+        int biomeAdjustment = getBiomeAdjustment(client.world, (chunkX << 4) + 8, (chunkZ << 4) + 8);
+        cullingDist = Math.max(8, cullingDist + biomeAdjustment);
+        
         if (isNether) {
             // Nether specific: cull if too far above or below
             double diffY = Math.abs(box.getCenter().y - cameraY);
@@ -354,6 +386,90 @@ public class CullingUtils {
         return transparent;
     }
 
+    private static void updateDynamicCullingDistance(MinecraftClient client) {
+        long currentTime = client.world.getTime();
+        if (currentTime - lastFpsUpdateTime >= 20) { // Update every second
+            currentFps = client.fpsDebugString.split(" ")[0];
+            try {
+                currentFps = Double.parseDouble(currentFps);
+            } catch (NumberFormatException e) {
+                currentFps = 60.0;
+            }
+            lastFpsUpdateTime = currentTime;
+            
+            EliminateConfig config = EliminateConfig.getInstance();
+            double fpsRatio = currentFps / config.targetFps;
+            
+            // Adjust distance based on FPS ratio
+            // When FPS is low (< target), increase culling distance
+            // When FPS is high (> target), decrease culling distance
+            dynamicDistanceAdjusted = (int) Math.round(
+                config.cullingDistance + 
+                (config.cullingDistance * (1.0 - fpsRatio) * 2.0)
+            );
+            
+            // Clamp to configured limits
+            dynamicDistanceAdjusted = Math.max(config.minDynamicDistance, dynamicDistanceAdjusted);
+            dynamicDistanceAdjusted = Math.min(config.maxDynamicDistance, dynamicDistanceAdjusted);
+        }
+    }
+    
+    private static boolean shouldCullHorizontally(Box box, int chunkX, int chunkY, int chunkZ, ClientWorld world, double cameraX, double cameraY, double cameraZ) {
+        EliminateConfig config = EliminateConfig.getInstance();
+        if (!config.horizontalCulling) return false;
+        
+        // Check if chunk is on the same horizontal plane but blocked by terrain
+        // For underground chunks, check if they're on the same level but too far horizontally
+        if (cachedPlayerUnderground) {
+            double horizontalDist = Math.sqrt(MathHelper.square(box.getCenter().x - cameraX) + MathHelper.square(box.getCenter().z - cameraZ));
+            int currentChunkY = (int) Math.floor(cameraY / 16.0);
+            
+            // Only cull if same chunk Y level and too far horizontally
+            if (currentChunkY == chunkY) {
+                int effectiveDistance = config.dynamicCullingDistance ? dynamicDistanceAdjusted : config.cullingDistance;
+                return horizontalDist > (double) (effectiveDistance + 16);
+            }
+        }
+        return false;
+    }
+    
+    private static int getBiomeAdjustment(ClientWorld world, int x, int z) {
+        EliminateConfig config = EliminateConfig.getInstance();
+        if (!config.biomeAwareCulling) return 0;
+        
+        long chunkKey = (((long) (x >> 4)) << 32) | ((long) (z >> 4) & 0xffffffffL);
+        if (cachedBiomeAdjustments.containsKey(chunkKey)) {
+            return cachedBiomeAdjustments.get(chunkKey);
+        }
+        
+        int adjustment = 0;
+        Chunk chunk = world.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, false);
+        if (chunk != null) {
+            RegistryKey<Biome> biomeKey = chunk.getBiomeForNoiseGen(x & 15, 0, z & 15).getKey().orElse(null);
+            if (biomeKey != null) {
+                String biomeId = biomeKey.getValue().getPath();
+                
+                // Adjust culling distance based on biome type
+                if (biomeId.contains("plains") || biomeId.contains("desert") || biomeId.contains("beach")) {
+                    // Flat biomes - more aggressive culling
+                    adjustment = -8;
+                } else if (biomeId.contains("forest") || biomeId.contains("jungle") || biomeId.contains("swamp")) {
+                    // Medium complexity biomes
+                    adjustment = 0;
+                } else if (biomeId.contains("mountains") || biomeId.contains("hills") || biomeId.contains("mesa")) {
+                    // Complex biomes - more conservative culling
+                    adjustment = 8;
+                } else if (biomeId.contains("ocean") || biomeId.contains("river") || biomeId.contains("lake")) {
+                    // Water biomes - more aggressive culling
+                    adjustment = -12;
+                }
+            }
+        }
+        
+        cachedBiomeAdjustments.put(chunkKey, adjustment);
+        return adjustment;
+    }
+    
     public static int getReliableSurfaceY(ClientWorld world, int x, int z) {
         if (world.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, false) == null) {
              return world.getBottomY();

@@ -16,6 +16,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class CullingUtils {
     private static ClientWorld cachedWorld;
     private static final Long2IntOpenHashMap cachedHeights = new Long2IntOpenHashMap();
@@ -30,6 +33,7 @@ public class CullingUtils {
     private static long lastFpsUpdateTime = -1;
     private static double currentFps = 0.0;
     private static int dynamicDistanceAdjusted = 32;
+    private static final int MAX_CACHE_SIZE = 1024;
 
     static {
         cachedHeights.defaultReturnValue(-1);
@@ -44,6 +48,18 @@ public class CullingUtils {
         lastFpsUpdateTime = -1;
         dynamicDistanceAdjusted = 32;
     }
+    
+    private static void ensureCacheSize() {
+        if (cachedHeights.size() > MAX_CACHE_SIZE) {
+            cachedHeights.clear();
+        }
+        if (cachedTransparency.size() > MAX_CACHE_SIZE) {
+            cachedTransparency.clear();
+        }
+        if (cachedBiomeAdjustments.size() > MAX_CACHE_SIZE) {
+            cachedBiomeAdjustments.clear();
+        }
+    }
 
     public static boolean shouldCull(Box box, int chunkX, int chunkY, int chunkZ) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -56,6 +72,8 @@ public class CullingUtils {
             EliminateClient.TOTAL_CHECKED++;
             EliminateClient.HUD_TOTAL_CHECKED++;
         }
+
+        ensureCacheSize();
 
         long currentTime = client.world.getTime();
         boolean shouldUpdate;
@@ -123,13 +141,16 @@ public class CullingUtils {
 
         // 2. FOV Culling
         if (config.fovCullingEnabled) {
+            Vec3d boxCenter = box.getCenter();
             Vec3d look = client.player.getRotationVec(1.0F);
-            Vec3d toBox = box.getCenter().subtract(cameraX, cameraY, cameraZ).normalize();
-            double dot = look.dotProduct(toBox);
+            Vec3d toBox = boxCenter.subtract(cameraX, cameraY, cameraZ);
+            double distSq = toBox.lengthSquared();
             
-            if (dot < fovCosineThreshold) {
-                double distSq = box.getCenter().squaredDistanceTo(cameraX, cameraY, cameraZ);
-                if (distSq > 256) {
+            if (distSq > 256) {
+                toBox = toBox.normalize();
+                double dot = look.dotProduct(toBox);
+                
+                if (dot < fovCosineThreshold) {
                     if (config.debugMode) {
                         EliminateClient.CULLED_COUNT++;
                         EliminateClient.CULLED_FOV++;
@@ -275,23 +296,27 @@ public class CullingUtils {
     private static void updateDynamicCullingDistance(MinecraftClient client) {
         long currentTime = client.world.getTime();
         if (currentTime - lastFpsUpdateTime >= 20) { // Update every second
-            currentFps = client.fpsDebugString.split(" ")[0];
             try {
-                currentFps = Double.parseDouble(currentFps);
+                String[] fpsParts = client.fpsDebugString.split(" ");
+                if (fpsParts.length > 0) {
+                    currentFps = Double.parseDouble(fpsParts[0]);
+                } else {
+                    currentFps = 60.0;
+                }
             } catch (NumberFormatException e) {
                 currentFps = 60.0;
             }
             lastFpsUpdateTime = currentTime;
             
             EliminateConfig config = EliminateConfig.getInstance();
-            double fpsRatio = currentFps / config.targetFps;
+            double fpsRatio = Math.max(0.1, Math.min(2.0, currentFps / config.targetFps));
             
             // Adjust distance based on FPS ratio
             // When FPS is low (< target), increase culling distance
             // When FPS is high (> target), decrease culling distance
             dynamicDistanceAdjusted = (int) Math.round(
                 config.cullingDistance + 
-                (config.cullingDistance * (1.0 - fpsRatio) * 2.0)
+                (config.cullingDistance * (1.0 - fpsRatio) * 1.5)
             );
             
             // Clamp to configured limits
@@ -307,13 +332,17 @@ public class CullingUtils {
         // Check if chunk is on the same horizontal plane but blocked by terrain
         // For underground chunks, check if they're on the same level but too far horizontally
         if (cachedPlayerUnderground) {
-            double horizontalDist = Math.sqrt(MathHelper.square(box.getCenter().x - cameraX) + MathHelper.square(box.getCenter().z - cameraZ));
+            Vec3d boxCenter = box.getCenter();
+            double dx = boxCenter.x - cameraX;
+            double dz = boxCenter.z - cameraZ;
+            double horizontalDistSq = dx * dx + dz * dz;
             int currentChunkY = (int) Math.floor(cameraY / 16.0);
             
             // Only cull if same chunk Y level and too far horizontally
             if (currentChunkY == chunkY) {
                 int effectiveDistance = config.dynamicCullingDistance ? dynamicDistanceAdjusted : config.cullingDistance;
-                return horizontalDist > (double) (effectiveDistance + 16);
+                double maxDistSq = (effectiveDistance + 16) * (effectiveDistance + 16);
+                return horizontalDistSq > maxDistSq;
             }
         }
         return false;

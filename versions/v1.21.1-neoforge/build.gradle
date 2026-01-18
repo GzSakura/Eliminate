@@ -1,5 +1,5 @@
 plugins {
-    id 'net.neoforged.gradle.userdev' version '7.0.150'
+    id 'net.neoforged.gradle.userdev' version '7.0.117'
     id 'maven-publish'
 }
 
@@ -22,17 +22,13 @@ repositories {
 }
 
 dependencies {
-    neoforge "net.neoforged:neoforge:${project.neoforge_version}"
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-
-    modCompileOnly "maven.modrinth:sodium:mc1.21.1-0.8.0-neoforge"
+    implementation "net.neoforged:neoforge:${neoforge_version}"
 
     // Config
-    modApi("me.shedaniel.cloth:cloth-config-neoforge:15.0.103")
-    modImplementation "com.terraformersmc:modmenu:10.0.0"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:15.0.127"
+    implementation "com.terraformersmc:modmenu:11.0.1"
 
     implementation "io.github.humbleui:skija-windows:0.109.0"
-    include "io.github.humbleui:skija-windows:0.109.0"
 
     // Fastutil for optimization (MC already includes it, but for dev consistency)
     implementation "it.unimi.dsi:fastutil:8.5.13"
@@ -43,7 +39,7 @@ processResources {
     inputs.property "minecraft_version", project.minecraft_version
     filteringCharset "UTF-8"
 
-    filesMatching("META-INF/mods.toml") {
+    filesMatching('META-INF/neoforge.mods.toml') {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version
     }

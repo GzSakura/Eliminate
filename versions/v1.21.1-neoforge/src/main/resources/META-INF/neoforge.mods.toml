@@ -1,5 +1,5 @@
 modLoader="neoforge"
-loaderVersion="[21.1.70, )"
+loaderVersion="[21.1.119, )"
 license="GPL-3.0-or-later"
 issueTrackerURL="https://github.com/miitong/Eliminate/issues"
 showAsResourcePack=false
@@ -16,7 +16,7 @@ icon="assets/eliminate/icon.png"
 [[dependencies.eliminate]]
 modId="neoforge"
 mandatory=true
-versionRange="[21.1.70, )"
+versionRange="[21.1.119, )"
 ordering="NONE"
 side="CLIENT"
 

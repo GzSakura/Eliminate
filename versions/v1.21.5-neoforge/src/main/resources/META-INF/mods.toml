@@ -6,7 +6,7 @@ showAsResourcePack=false
 
 [[mods]]
 modId="eliminate"
-version="${version}
+version="${version}"
 name="Eliminate"
 description="Vertical Chunk Culling for performance optimization."
 authors=["GZ_Sakura", "leemwood"]

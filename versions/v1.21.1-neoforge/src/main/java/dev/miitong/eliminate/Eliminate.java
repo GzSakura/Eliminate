@@ -1,10 +1,10 @@
 package dev.miitong.eliminate;
 
-import net.fabricmc.api.ModInitializer;
+import net.neoforged.fml.common.Mod;
 
-public class Eliminate implements ModInitializer {
+@Mod("eliminate")
+public class Eliminate {
 
-    @Override
-    public void onInitialize() {
+    public Eliminate() {
     }
 }

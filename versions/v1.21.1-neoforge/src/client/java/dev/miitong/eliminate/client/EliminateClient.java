@@ -1,9 +1,13 @@
 package dev.miitong.eliminate.client;
 
 import dev.miitong.eliminate.config.EliminateConfig;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.loader.api.FabricLoader;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.fml.loading.FMLLoader;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.slf4j.Logger;
@@ -11,10 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
-public class EliminateClient implements ClientModInitializer {
+@Mod.EventBusSubscriber(modid = "eliminate", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class EliminateClient {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("Eliminate");
-    public static final boolean IRIS_LOADED = FabricLoader.getInstance().isModLoaded("iris");
+    public static final boolean IRIS_LOADED = FMLLoader.getLoadingModList().getModFileById("iris") != null;
     public static int CULLED_COUNT = 0;
     public static int CULLED_VERTICAL = 0;
     public static int CULLED_BACK = 0;
@@ -33,7 +38,7 @@ public class EliminateClient implements ClientModInitializer {
     public static boolean debugCachedUnderground = false;
     public static int debugCachedSurfaceY = 0;
 
-    private int tickCounter = 0;
+    private static int tickCounter = 0;
 
     private static boolean irisApiResolved = false;
     private static Object irisApiInstance;
@@ -78,11 +83,10 @@ public class EliminateClient implements ClientModInitializer {
         }
     }
 
-    @Override
-    public void onInitializeClient() {
+    public static void onInitializeClient(FMLClientSetupEvent event) {
         EliminateConfig.load();
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (EliminateConfig.getInstance().debugMode && client.player != null) {
+        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post event1) -> {
+            if (EliminateConfig.getInstance().debugMode && event1.getEntity() != null) {
                 tickCounter++;
                 if (tickCounter >= 20) {
                     // Manual concatenation to avoid placeholder issues
@@ -91,12 +95,12 @@ public class EliminateClient implements ClientModInitializer {
                         Text.translatable("hud.eliminate.fov").getString() + CULLED_FOV + " | " +
                         Text.translatable("hud.eliminate.vert").getString() + CULLED_VERTICAL + " | " +
                         Text.translatable("hud.eliminate.mountain").getString() + CULLED_MOUNTAIN + " | " +
-                        Text.translatable("hud.eliminate.y_info").getString() + (int)client.player.getY() + " (Surf: " + debugCachedSurfaceY + ") | " +
+                        Text.translatable("hud.eliminate.y_info").getString() + (int)event1.getEntity().getY() + " (Surf: " + debugCachedSurfaceY + ") | " +
                         Text.translatable("hud.eliminate.underground").getString() + debugCachedUnderground;
 
                     Text actionBarText = Text.literal(text).formatted(Formatting.YELLOW);
                     
-                    client.player.sendMessage(actionBarText, true);
+                    event1.getEntity().sendMessage(actionBarText, true);
                     
                     LOGGER.info(actionBarText.getString());
                     

@@ -1,6 +1,6 @@
 # Eliminate (beta.2)
 
-[English](./README_EN.md) | 简体中文
+[English](./_EN.md) | 简体中文
 
 这是一个模组的非官方移植。
 

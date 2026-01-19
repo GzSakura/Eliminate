@@ -1,0 +1,209 @@
+{
+  "config.eliminate.title": "Eliminate Configuration",
+  "config.eliminate.category.general": "General",
+  "config.eliminate.category.culling": "Culling",
+  "config.eliminate.category.vertical": "Vertical Culling",
+  "config.eliminate.category.backface": "Backface Culling",
+  "config.eliminate.category.entity": "Entity Culling",
+  "config.eliminate.category.fog": "Fog Culling",
+  "config.eliminate.category.performance": "Performance",
+  "config.eliminate.category.advanced": "Advanced",
+  "config.eliminate.category.cache": "Cache",
+  "config.eliminate.category.dimension": "Dimension",
+  "config.eliminate.category.debug": "Debug",
+  "config.eliminate.category.profiling": "Profiling",
+  "config.eliminate.category.compatibility": "Compatibility",
+  "config.eliminate.category.experimental": "Experimental",
+
+  "config.eliminate.option.enabled": "Enable Mod",
+  "config.eliminate.option.enabled.tooltip": "Enable or disable all Eliminate mod features",
+
+  "config.eliminate.option.cullingDistance": "Culling Distance",
+  "config.eliminate.option.cullingDistance.tooltip": "Maximum distance for chunk culling (in blocks)",
+
+  "config.eliminate.option.debugMode": "Debug Mode",
+  "config.eliminate.option.debugMode.tooltip": "Show detailed culling statistics in the action bar",
+
+  "config.eliminate.option.autoOptimize": "Auto Optimize",
+  "config.eliminate.option.autoOptimize.tooltip": "Automatically adjust settings based on system performance",
+
+  "config.eliminate.option.fovCullingEnabled": "FOV Culling",
+  "config.eliminate.option.fovCullingEnabled.tooltip": "Cull invisible chunks based on field of view angle",
+
+  "config.eliminate.option.aggressiveMountainCulling": "Aggressive Mountain Culling",
+  "config.eliminate.option.aggressiveMountainCulling.tooltip": "Aggressively cull surface chunks when underground",
+
+  "config.eliminate.option.transparencyAwareness": "Transparency Awareness",
+  "config.eliminate.option.transparencyAwareness.tooltip": "Detect transparent blocks to avoid visual glitches",
+
+  "config.eliminate.option.horizontalCulling": "Horizontal Culling",
+  "config.eliminate.option.horizontalCulling.tooltip": "Cull chunks that are too far horizontally",
+
+  "config.eliminate.option.biomeAwareCulling": "Biome Aware Culling",
+  "config.eliminate.option.biomeAwareCulling.tooltip": "Adjust culling strategy based on biome type",
+
+  "config.eliminate.option.endDimensionOptimization": "End Dimension Optimization",
+  "config.eliminate.option.endDimensionOptimization.tooltip": "Apply special optimizations for the End dimension",
+
+  "config.eliminate.option.verticalCullingEnabled": "Enable Vertical Culling",
+  "config.eliminate.option.verticalCullingEnabled.tooltip": "Cull chunks too far vertically based on player height",
+
+  "config.eliminate.option.verticalCullingDistance": "Vertical Culling Distance",
+  "config.eliminate.option.verticalCullingDistance.tooltip": "Maximum distance for vertical culling",
+
+  "config.eliminate.option.verticalCullingUndergroundOnly": "Underground Only Vertical Culling",
+  "config.eliminate.option.verticalCullingUndergroundOnly.tooltip": "Only apply vertical culling when player is underground",
+
+  "config.eliminate.option.verticalCullingSurfaceMargin": "Surface Margin",
+  "config.eliminate.option.verticalCullingSurfaceMargin.tooltip": "Culling margin near the surface",
+
+  "config.eliminate.option.backfaceCullingEnabled": "Backface Culling",
+  "config.eliminate.option.backfaceCullingEnabled.tooltip": "Cull chunks facing away from the player",
+
+  "config.eliminate.option.backfaceCullingAggressive": "Aggressive Backface Culling",
+  "config.eliminate.option.backfaceCullingAggressive.tooltip": "Use more aggressive backface culling algorithm",
+
+  "config.eliminate.option.backfaceCullingDistance": "Backface Culling Distance",
+  "config.eliminate.option.backfaceCullingDistance.tooltip": "Maximum distance for backface culling",
+
+  "config.eliminate.option.entityCullingEnabled": "Entity Culling",
+  "config.eliminate.option.entityCullingEnabled.tooltip": "Cull entities outside of view",
+
+  "config.eliminate.option.entityCullingDistance": "Entity Culling Distance",
+  "config.eliminate.option.entityCullingDistance.tooltip": "Maximum distance for entity culling",
+
+  "config.eliminate.option.entityCullingIncludeItems": "Include Items",
+  "config.eliminate.option.entityCullingIncludeItems.tooltip": "Cull dropped items",
+
+  "config.eliminate.option.entityCullingIncludeParticles": "Include Particles",
+  "config.eliminate.option.entityCullingIncludeParticles.tooltip": "Cull particle effects outside of view",
+
+  "config.eliminate.option.fogCullingEnabled": "Fog Culling",
+  "config.eliminate.option.fogCullingEnabled.tooltip": "Cull chunks within fog range",
+
+  "config.eliminate.option.fogCullingDistance": "Fog Culling Distance",
+  "config.eliminate.option.fogCullingDistance.tooltip": "Maximum distance for fog culling",
+
+  "config.eliminate.option.fogCullingAdaptive": "Adaptive Fog Culling",
+  "config.eliminate.option.fogCullingAdaptive.tooltip": "Dynamically adjust culling based on current fog density",
+
+  "config.eliminate.option.dynamicCullingDistance": "Dynamic Culling Distance",
+  "config.eliminate.option.dynamicCullingDistance.tooltip": "Dynamically adjust culling distance based on FPS",
+
+  "config.eliminate.option.targetFps": "Target FPS",
+  "config.eliminate.option.targetFps.tooltip": "Target frame rate for dynamic adjustment",
+
+  "config.eliminate.option.minDynamicDistance": "Min Dynamic Distance",
+  "config.eliminate.option.minDynamicDistance.tooltip": "Minimum distance for dynamic culling",
+
+  "config.eliminate.option.maxDynamicDistance": "Max Dynamic Distance",
+  "config.eliminate.option.maxDynamicDistance.tooltip": "Maximum distance for dynamic culling",
+
+  "config.eliminate.option.updateSpeed": "Update Speed",
+  "config.eliminate.option.updateSpeed.tooltip": "Speed of configuration updates (1-20)",
+
+  "config.eliminate.option.syncWithSodium": "Sync with Sodium",
+  "config.eliminate.option.syncWithSodium.tooltip": "Sync rendering cycle with Sodium mod",
+
+  "config.eliminate.option.threadPoolSize": "Thread Pool Size",
+  "config.eliminate.option.threadPoolSize.tooltip": "Thread pool size for async tasks (-1 for auto-detect)",
+
+  "config.eliminate.option.preCalculateChunks": "Pre-calculate Chunks",
+  "config.eliminate.option.preCalculateChunks.tooltip": "Pre-calculate nearby chunks in background",
+
+  "config.eliminate.option.preCalculateRadius": "Pre-calculate Radius",
+  "config.eliminate.option.preCalculateRadius.tooltip": "Radius for pre-calculating chunks",
+
+  "config.eliminate.option.cacheOptimizationEnabled": "Enable Cache Optimization",
+  "config.eliminate.option.cacheOptimizationEnabled.tooltip": "Use caching to improve performance",
+
+  "config.eliminate.option.cacheMaxSize": "Max Cache Size",
+  "config.eliminate.option.cacheMaxSize.tooltip": "Maximum number of cache entries",
+
+  "config.eliminate.option.cacheTtl": "Cache TTL",
+  "config.eliminate.option.cacheTtl.tooltip": "Time to live for cache entries (in seconds)",
+
+  "config.eliminate.option.cachePersistent": "Persistent Cache",
+  "config.eliminate.option.cachePersistent.tooltip": "Keep cache between game sessions",
+
+  "config.eliminate.option.netherOptimizationEnabled": "Nether Optimization",
+  "config.eliminate.option.netherOptimizationEnabled.tooltip": "Apply special optimizations for Nether dimension",
+
+  "config.eliminate.option.netherCeilingCullingDistance": "Nether Ceiling Culling Distance",
+  "config.eliminate.option.netherCeilingCullingDistance.tooltip": "Maximum distance for Nether ceiling culling",
+
+  "config.eliminate.option.netherFloorCullingEnabled": "Nether Floor Culling",
+  "config.eliminate.option.netherFloorCullingEnabled.tooltip": "Enable Nether floor culling",
+
+  "config.eliminate.option.netherFloorCullingDistance": "Nether Floor Culling Distance",
+  "config.eliminate.option.netherFloorCullingDistance.tooltip": "Maximum distance for Nether floor culling",
+
+  "config.eliminate.option.endOptimizationEnabled": "End Optimization",
+  "config.eliminate.option.endOptimizationEnabled.tooltip": "Apply special optimizations for End dimension",
+
+  "config.eliminate.option.endIslandCullingDistance": "End Island Culling Distance",
+  "config.eliminate.option.endIslandCullingDistance.tooltip": "Maximum distance for End floating island culling",
+
+  "config.eliminate.option.endVoidCullingEnabled": "End Void Culling",
+  "config.eliminate.option.endVoidCullingEnabled.tooltip": "Enable End void area culling",
+
+  "config.eliminate.option.endVoidCullingDistance": "End Void Culling Distance",
+  "config.eliminate.option.endVoidCullingDistance.tooltip": "Maximum distance for End void culling",
+
+  "config.eliminate.option.debugHudEnabled": "Enable Debug HUD",
+  "config.eliminate.option.debugHudEnabled.tooltip": "Show debug information on screen",
+
+  "config.eliminate.option.debugHudRefreshRate": "HUD Refresh Rate",
+  "config.eliminate.option.debugHudRefreshRate.tooltip": "Refresh frequency for debug HUD",
+
+  "config.eliminate.option.debugHudShowCacheStats": "Show Cache Stats",
+  "config.eliminate.option.debugHudShowCacheStats.tooltip": "Display cache statistics in HUD",
+
+  "config.eliminate.option.debugHudShowThreadStats": "Show Thread Stats",
+  "config.eliminate.option.debugHudShowThreadStats.tooltip": "Display thread pool statistics in HUD",
+
+  "config.eliminate.option.debugHudShowCullingBreakdown": "Show Culling Breakdown",
+  "config.eliminate.option.debugHudShowCullingBreakdown.tooltip": "Display detailed culling breakdown in HUD",
+
+  "config.eliminate.option.performanceProfilingEnabled": "Enable Performance Profiling",
+  "config.eliminate.option.performanceProfilingEnabled.tooltip": "Collect performance data for optimization",
+
+  "config.eliminate.option.profilingSampleInterval": "Profiling Sample Interval",
+  "config.eliminate.option.profilingSampleInterval.tooltip": "Sample interval for performance profiling (in ticks)",
+
+  "config.eliminate.option.profilingAutoOptimize": "Auto Optimize",
+  "config.eliminate.option.profilingAutoOptimize.tooltip": "Automatically adjust settings based on profiling data",
+
+  "config.eliminate.option.compatibilityMode": "Compatibility Mode",
+  "config.eliminate.option.compatibilityMode.tooltip": "Enable compatibility adjustments with other mods",
+
+  "config.eliminate.option.sodiumIntegrationEnabled": "Sodium Integration",
+  "config.eliminate.option.sodiumIntegrationEnabled.tooltip": "Enable deep integration with Sodium mod",
+
+  "config.eliminate.option.irisIntegrationEnabled": "Iris Integration",
+  "config.eliminate.option.irisIntegrationEnabled.tooltip": "Enable integration with Iris shaders mod",
+
+  "config.eliminate.option.optifineCompatibilityMode": "OptiFine Compatibility Mode",
+  "config.eliminate.option.optifineCompatibilityMode.tooltip": "Enable OptiFine compatibility adjustments",
+
+  "config.eliminate.option.experimentalFeaturesEnabled": "Experimental Features",
+  "config.eliminate.option.experimentalFeaturesEnabled.tooltip": "Enable experimental features (may be unstable)",
+
+  "config.eliminate.option.experimentalAsyncRendering": "Experimental Async Rendering",
+  "config.eliminate.option.experimentalAsyncRendering.tooltip": "Use experimental async rendering techniques",
+
+  "config.eliminate.option.experimentalPredictiveCulling": "Experimental Predictive Culling",
+  "config.eliminate.option.experimentalPredictiveCulling.tooltip": "Use predictive algorithms to cull chunks ahead of time",
+
+  "config.eliminate.option.experimentalPredictiveRadius": "Predictive Radius",
+  "config.eliminate.option.experimentalPredictiveRadius.tooltip": "Radius for predictive culling",
+
+  "config.eliminate.option.chunkUpdateOptimization": "Chunk Update Optimization",
+  "config.eliminate.option.chunkUpdateOptimization.tooltip": "Optimize chunk updates for better performance",
+
+  "config.eliminate.option.chunkUpdateBatchSize": "Chunk Update Batch Size",
+  "config.eliminate.option.chunkUpdateBatchSize.tooltip": "Number of chunks per update batch",
+
+  "config.eliminate.option.chunkUpdateAsync": "Async Chunk Updates",
+  "config.eliminate.option.chunkUpdateAsync.tooltip": "Process chunk updates in background threads"
+}

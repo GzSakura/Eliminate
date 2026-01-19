@@ -1,0 +1,209 @@
+{
+  "config.eliminate.title": "Eliminate 配置",
+  "config.eliminate.category.general": "通用",
+  "config.eliminate.category.culling": "剔除",
+  "config.eliminate.category.vertical": "垂直剔除",
+  "config.eliminate.category.backface": "背面剔除",
+  "config.eliminate.category.entity": "实体剔除",
+  "config.eliminate.category.fog": "雾效剔除",
+  "config.eliminate.category.performance": "性能",
+  "config.eliminate.category.advanced": "高级",
+  "config.eliminate.category.cache": "缓存",
+  "config.eliminate.category.dimension": "维度",
+  "config.eliminate.category.debug": "调试",
+  "config.eliminate.category.profiling": "性能分析",
+  "config.eliminate.category.compatibility": "兼容性",
+  "config.eliminate.category.experimental": "实验性",
+
+  "config.eliminate.option.enabled": "启用模组",
+  "config.eliminate.option.enabled.tooltip": "启用或禁用Eliminate模组的所有功能",
+
+  "config.eliminate.option.cullingDistance": "剔除距离",
+  "config.eliminate.option.cullingDistance.tooltip": "区块剔除的最大距离（方块）",
+
+  "config.eliminate.option.debugMode": "调试模式",
+  "config.eliminate.option.debugMode.tooltip": "在操作栏显示详细的剔除统计信息",
+
+  "config.eliminate.option.autoOptimize": "自动优化",
+  "config.eliminate.option.autoOptimize.tooltip": "根据系统性能自动调整配置",
+
+  "config.eliminate.option.fovCullingEnabled": "FOV剔除",
+  "config.eliminate.option.fovCullingEnabled.tooltip": "基于视野角度剔除不可见的区块",
+
+  "config.eliminate.option.aggressiveMountainCulling": "激进山体剔除",
+  "config.eliminate.option.aggressiveMountainCulling.tooltip": "在地下时激进地剔除地表区块",
+
+  "config.eliminate.option.transparencyAwareness": "透明度感知",
+  "config.eliminate.option.transparencyAwareness.tooltip": "检测透明方块以避免视觉闪烁",
+
+  "config.eliminate.option.horizontalCulling": "水平剔除",
+  "config.eliminate.option.horizontalCulling.tooltip": "剔除水平方向过远的区块",
+
+  "config.eliminate.option.biomeAwareCulling": "生物群系感知",
+  "config.eliminate.option.biomeAwareCulling.tooltip": "根据生物群系类型调整剔除策略",
+
+  "config.eliminate.option.endDimensionOptimization": "末地维度优化",
+  "config.eliminate.option.endDimensionOptimization.tooltip": "为末地维度应用特殊优化",
+
+  "config.eliminate.option.verticalCullingEnabled": "启用垂直剔除",
+  "config.eliminate.option.verticalCullingEnabled.tooltip": "根据玩家高度剔除垂直方向过远的区块",
+
+  "config.eliminate.option.verticalCullingDistance": "垂直剔除距离",
+  "config.eliminate.option.verticalCullingDistance.tooltip": "垂直方向的最大剔除距离",
+
+  "config.eliminate.option.verticalCullingUndergroundOnly": "仅地下垂直剔除",
+  "config.eliminate.option.verticalCullingUndergroundOnly.tooltip": "仅在玩家位于地下时应用垂直剔除",
+
+  "config.eliminate.option.verticalCullingSurfaceMargin": "地表边距",
+  "config.eliminate.option.verticalCullingSurfaceMargin.tooltip": "地表附近的剔除边距",
+
+  "config.eliminate.option.backfaceCullingEnabled": "背面剔除",
+  "config.eliminate.option.backfaceCullingEnabled.tooltip": "剔除背对玩家的区块",
+
+  "config.eliminate.option.backfaceCullingAggressive": "激进背面剔除",
+  "config.eliminate.option.backfaceCullingAggressive.tooltip": "使用更激进的背面剔除算法",
+
+  "config.eliminate.option.backfaceCullingDistance": "背面剔除距离",
+  "config.eliminate.option.backfaceCullingDistance.tooltip": "背面剔除的最大距离",
+
+  "config.eliminate.option.entityCullingEnabled": "实体剔除",
+  "config.eliminate.option.entityCullingEnabled.tooltip": "剔除视野外的实体",
+
+  "config.eliminate.option.entityCullingDistance": "实体剔除距离",
+  "config.eliminate.option.entityCullingDistance.tooltip": "实体剔除的最大距离",
+
+  "config.eliminate.option.entityCullingIncludeItems": "包含物品",
+  "config.eliminate.option.entityCullingIncludeItems.tooltip": "剔除掉落的物品",
+
+  "config.eliminate.option.entityCullingIncludeParticles": "包含粒子",
+  "config.eliminate.option.entityCullingIncludeParticles.tooltip": "剔除视野外的粒子效果",
+
+  "config.eliminate.option.fogCullingEnabled": "雾效剔除",
+  "config.eliminate.option.fogCullingEnabled.tooltip": "在雾效范围内剔除区块",
+
+  "config.eliminate.option.fogCullingDistance": "雾效剔除距离",
+  "config.eliminate.option.fogCullingDistance.tooltip": "雾效剔除的最大距离",
+
+  "config.eliminate.option.fogCullingAdaptive": "自适应雾效剔除",
+  "config.eliminate.option.fogCullingAdaptive.tooltip": "根据当前雾效密度动态调整剔除",
+
+  "config.eliminate.option.dynamicCullingDistance": "动态剔除距离",
+  "config.eliminate.option.dynamicCullingDistance.tooltip": "根据FPS动态调整剔除距离",
+
+  "config.eliminate.option.targetFps": "目标FPS",
+  "config.eliminate.option.targetFps.tooltip": "动态调整的目标帧率",
+
+  "config.eliminate.option.minDynamicDistance": "最小动态距离",
+  "config.eliminate.option.minDynamicDistance.tooltip": "动态剔除的最小距离",
+
+  "config.eliminate.option.maxDynamicDistance": "最大动态距离",
+  "config.eliminate.option.maxDynamicDistance.tooltip": "动态剔除的最大距离",
+
+  "config.eliminate.option.updateSpeed": "更新速度",
+  "config.eliminate.option.updateSpeed.tooltip": "配置更新的速度（1-20）",
+
+  "config.eliminate.option.syncWithSodium": "与Sodium同步",
+  "config.eliminate.option.syncWithSodium.tooltip": "与Sodium模组的渲染周期同步",
+
+  "config.eliminate.option.threadPoolSize": "线程池大小",
+  "config.eliminate.option.threadPoolSize.tooltip": "异步任务的线程池大小（-1为自动检测）",
+
+  "config.eliminate.option.preCalculateChunks": "预计算区块",
+  "config.eliminate.option.preCalculateChunks.tooltip": "在后台预计算附近区块",
+
+  "config.eliminate.option.preCalculateRadius": "预计算半径",
+  "config.eliminate.option.preCalculateRadius.tooltip": "预计算区块的半径",
+
+  "config.eliminate.option.cacheOptimizationEnabled": "启用缓存优化",
+  "config.eliminate.option.cacheOptimizationEnabled.tooltip": "使用缓存来提高性能",
+
+  "config.eliminate.option.cacheMaxSize": "最大缓存大小",
+  "config.eliminate.option.cacheMaxSize.tooltip": "缓存的最大条目数",
+
+  "config.eliminate.option.cacheTtl": "缓存生存时间",
+  "config.eliminate.option.cacheTtl.tooltip": "缓存条目的生存时间（秒）",
+
+  "config.eliminate.option.cachePersistent": "持久化缓存",
+  "config.eliminate.option.cachePersistent.tooltip": "在游戏会话之间保持缓存",
+
+  "config.eliminate.option.netherOptimizationEnabled": "下界优化",
+  "config.eliminate.option.netherOptimizationEnabled.tooltip": "为下界维度应用特殊优化",
+
+  "config.eliminate.option.netherCeilingCullingDistance": "下界天花板剔除距离",
+  "config.eliminate.option.netherCeilingCullingDistance.tooltip": "下界天花板剔除的最大距离",
+
+  "config.eliminate.option.netherFloorCullingEnabled": "下界地板剔除",
+  "config.eliminate.option.netherFloorCullingEnabled.tooltip": "启用下界地板剔除",
+
+  "config.eliminate.option.netherFloorCullingDistance": "下界地板剔除距离",
+  "config.eliminate.option.netherFloorCullingDistance.tooltip": "下界地板剔除的最大距离",
+
+  "config.eliminate.option.endOptimizationEnabled": "末地优化",
+  "config.eliminate.option.endOptimizationEnabled.tooltip": "为末地维度应用特殊优化",
+
+  "config.eliminate.option.endIslandCullingDistance": "末地岛屿剔除距离",
+  "config.eliminate.option.endIslandCullingDistance.tooltip": "末地浮空岛剔除的最大距离",
+
+  "config.eliminate.option.endVoidCullingEnabled": "末地虚空剔除",
+  "config.eliminate.option.endVoidCullingEnabled.tooltip": "启用末地虚空区域剔除",
+
+  "config.eliminate.option.endVoidCullingDistance": "末地虚空剔除距离",
+  "config.eliminate.option.endVoidCullingDistance.tooltip": "末地虚空剔除的最大距离",
+
+  "config.eliminate.option.debugHudEnabled": "启用调试HUD",
+  "config.eliminate.option.debugHudEnabled.tooltip": "在屏幕上显示调试信息",
+
+  "config.eliminate.option.debugHudRefreshRate": "HUD刷新率",
+  "config.eliminate.option.debugHudRefreshRate.tooltip": "调试HUD的刷新频率",
+
+  "config.eliminate.option.debugHudShowCacheStats": "显示缓存统计",
+  "config.eliminate.option.debugHudShowCacheStats.tooltip": "在HUD中显示缓存统计信息",
+
+  "config.eliminate.option.debugHudShowThreadStats": "显示线程统计",
+  "config.eliminate.option.debugHudShowThreadStats.tooltip": "在HUD中显示线程池统计信息",
+
+  "config.eliminate.option.debugHudShowCullingBreakdown": "显示剔除明细",
+  "config.eliminate.option.debugHudShowCullingBreakdown.tooltip": "在HUD中显示详细的剔除分类",
+
+  "config.eliminate.option.performanceProfilingEnabled": "启用性能分析",
+  "config.eliminate.option.performanceProfilingEnabled.tooltip": "收集性能数据用于优化",
+
+  "config.eliminate.option.profilingSampleInterval": "分析采样间隔",
+  "config.eliminate.option.profilingSampleInterval.tooltip": "性能分析的采样间隔（tick）",
+
+  "config.eliminate.option.profilingAutoOptimize": "自动优化",
+  "config.eliminate.option.profilingAutoOptimize.tooltip": "基于性能分析自动调整配置",
+
+  "config.eliminate.option.compatibilityMode": "兼容模式",
+  "config.eliminate.option.compatibilityMode.tooltip": "启用与其他模组的兼容性调整",
+
+  "config.eliminate.option.sodiumIntegrationEnabled": "Sodium集成",
+  "config.eliminate.option.sodiumIntegrationEnabled.tooltip": "启用与Sodium模组的深度集成",
+
+  "config.eliminate.option.irisIntegrationEnabled": "Iris集成",
+  "config.eliminate.option.irisIntegrationEnabled.tooltip": "启用与Iris光影模组的集成",
+
+  "config.eliminate.option.optifineCompatibilityMode": "OptiFine兼容模式",
+  "config.eliminate.option.optifineCompatibilityMode.tooltip": "启用OptiFine兼容性调整",
+
+  "config.eliminate.option.experimentalFeaturesEnabled": "实验性功能",
+  "config.eliminate.option.experimentalFeaturesEnabled.tooltip": "启用实验性功能（可能不稳定）",
+
+  "config.eliminate.option.experimentalAsyncRendering": "实验性异步渲染",
+  "config.eliminate.option.experimentalAsyncRendering.tooltip": "使用实验性的异步渲染技术",
+
+  "config.eliminate.option.experimentalPredictiveCulling": "实验性预测剔除",
+  "config.eliminate.option.experimentalPredictiveCulling.tooltip": "使用预测算法提前剔除区块",
+
+  "config.eliminate.option.experimentalPredictiveRadius": "预测半径",
+  "config.eliminate.option.experimentalPredictiveRadius.tooltip": "预测剔除的半径",
+
+  "config.eliminate.option.chunkUpdateOptimization": "区块更新优化",
+  "config.eliminate.option.chunkUpdateOptimization.tooltip": "优化区块更新以提高性能",
+
+  "config.eliminate.option.chunkUpdateBatchSize": "区块更新批次大小",
+  "config.eliminate.option.chunkUpdateBatchSize.tooltip": "每个更新批次的区块数量",
+
+  "config.eliminate.option.chunkUpdateAsync": "异步区块更新",
+  "config.eliminate.option.chunkUpdateAsync.tooltip": "在后台线程中处理区块更新"
+}

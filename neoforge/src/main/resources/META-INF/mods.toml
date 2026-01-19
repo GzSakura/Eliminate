@@ -1,0 +1,42 @@
+modLoader="neoforge"
+loaderVersion="[21.11.30-beta, )"
+license="GPL-3.0-or-later"
+issueTrackerURL="https://github.com/miitong/Eliminate/issues"
+showAsResourcePack=false
+
+[[mods]]
+modId="eliminate"
+version="${version}"
+name="Eliminate"
+description="Vertical Chunk Culling for performance optimization."
+authors=["GZ_Sakura", "leemwood"]
+displayURL="https://modrinth.com/mod/eliminate"
+icon="assets/eliminate/icon.png"
+
+[[dependencies.eliminate]]
+modId="neoforge"
+mandatory=true
+versionRange="[21.11.30-beta, )"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.eliminate]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.21.11, )"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.eliminate]]
+modId="cloth_config"
+mandatory=false
+versionRange="[15.0.127, )"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.eliminate]]
+modId="modmenu"
+mandatory=false
+versionRange="[11.0.1, )"
+ordering="NONE"
+side="CLIENT"

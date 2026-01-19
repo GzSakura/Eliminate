@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "eliminate",
+  "version": "${version}",
+  "name": "Eliminate",
+  "description": "Vertical Chunk Culling for performance optimization.",
+  "authors": [
+    "GZ_Sakura",
+    "leemwood"
+  ],
+  "contact": {},
+  "license": "GPL-3.0-or-later",
+  "icon": "assets/eliminate/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "dev.miitong.eliminate.client.EliminateDataGenerator"
+    ],
+    "client": [
+      "dev.miitong.eliminate.client.EliminateClient"
+    ],
+    "main": [
+      "dev.miitong.eliminate.Eliminate"
+    ],
+    "modmenu": [
+      "dev.miitong.eliminate.client.integration.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "eliminate.mixins.json",
+    {
+      "config": "eliminate.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

@@ -4,11 +4,21 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
+        maven {
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases/'
+        }
         gradlePluginPortal()
     }
 }
 
 rootProject.name = 'Eliminate'
 
-include 'versions:v1.21.10'
-include 'versions:v1.21.11'
+include 'versions:v1.21.1-fabric'
+include 'versions:v1.21.5-fabric'
+include 'versions:v1.21.10-fabric'
+include 'versions:v1.21.11-fabric'
+include 'neoforge'
+include 'versions:v1.21.1-neoforge'
+include 'versions:v1.21.5-neoforge'
+include 'fabric'

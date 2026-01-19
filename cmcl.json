@@ -1,0 +1,14 @@
+{
+  "exitWithMinecraft": false,
+  "language": "zh",
+  "downloadSource": 1,
+  "checkAccountBeforeStart": "false",
+  "accounts": [{
+    "playerName": "TestUser",
+    "loginMethod": 0,
+    "selected": true
+  }],
+  "printStartupInfo": false,
+  "gameDir": ".minecraft",
+  "versionIsolation": true
+}

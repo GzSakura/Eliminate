@@ -26,3 +26,17 @@ mandatory=true
 versionRange="[1.21.11, )"
 ordering="NONE"
 side="CLIENT"
+
+[[dependencies.eliminate]]
+modId="cloth_config"
+mandatory=false
+versionRange="[15.0.127, )"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.eliminate]]
+modId="modmenu"
+mandatory=false
+versionRange="[11.0.1, )"
+ordering="NONE"
+side="CLIENT"

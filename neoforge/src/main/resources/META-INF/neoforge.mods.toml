@@ -26,3 +26,17 @@ mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="cloth_config"
+mandatory=false
+versionRange="[15.0.127, )"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="modmenu"
+mandatory=false
+versionRange="[11.0.1, )"
+ordering="NONE"
+side="CLIENT"

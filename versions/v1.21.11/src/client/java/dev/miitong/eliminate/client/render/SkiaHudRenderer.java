@@ -79,7 +79,7 @@ public class SkiaHudRenderer implements HudRenderCallback {
             I18n.translate("hud.eliminate.fov") + EliminateClient.HUD_CULLED_FOV,
             I18n.translate("hud.eliminate.vert") + EliminateClient.HUD_CULLED_VERTICAL,
             I18n.translate("hud.eliminate.mountain") + EliminateClient.HUD_CULLED_MOUNTAIN,
-            I18n.translate("hud.eliminate.y_info") + (int)client.player.getY() + " (Surf: " + EliminateClient.debugCachedSurfaceY + ")",
+            I18n.translate("hud.eliminate.y_info", (int)client.player.getY(), EliminateClient.debugCachedSurfaceY),
             I18n.translate("hud.eliminate.underground") + EliminateClient.debugCachedUnderground
         };
 

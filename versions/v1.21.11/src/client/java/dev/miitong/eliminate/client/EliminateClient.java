@@ -40,12 +40,11 @@ public class EliminateClient implements ClientModInitializer {
     private static Method irisIsShadowPassMethod;
     private static int cachedShadowFrameIndex = Integer.MIN_VALUE;
     private static boolean cachedShadowPass = false;
+    private static long lastShadowQueryTime = -1;
 
     public static boolean isIrisShadowPass(int frameIndex) {
         if (!IRIS_LOADED) return false;
         if (cachedShadowFrameIndex == frameIndex) {
-            if (cachedShadowPass) return true;
-            cachedShadowPass = queryIrisShadowPass();
             return cachedShadowPass;
         }
 
@@ -55,7 +54,15 @@ public class EliminateClient implements ClientModInitializer {
     }
 
     public static boolean isRenderingShadowPass() {
-        return queryIrisShadowPass();
+        if (!IRIS_LOADED) return false;
+        long time = System.currentTimeMillis();
+        // Cache for 1ms - enough for most chunk updates in a single frame
+        if (time == lastShadowQueryTime) {
+            return cachedShadowPass;
+        }
+        lastShadowQueryTime = time;
+        cachedShadowPass = queryIrisShadowPass();
+        return cachedShadowPass;
     }
 
     private static boolean queryIrisShadowPass() {

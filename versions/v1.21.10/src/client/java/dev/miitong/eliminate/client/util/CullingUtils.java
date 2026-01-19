@@ -21,10 +21,16 @@ public class CullingUtils {
     private static int cachedPlayerSurfaceY;
     private static int cachedPlayerCeilingY;
     private static boolean cachedPlayerUnderground;
+    private static double cachedPlayerX, cachedPlayerY, cachedPlayerZ;
     private static boolean isNether;
+    private static boolean hasCeiling;
     private static double fovCosineThreshold;
+    private static int cachedReservedHeight;
+    private static float lastYaw, lastPitch;
+    private static double smoothedRotationFactor = 0;
 
-    static {        cachedHeights.defaultReturnValue(-1);
+    static {
+        cachedHeights.defaultReturnValue(-1);
     }
 
     public static void resetCache() {
@@ -41,10 +47,9 @@ public class CullingUtils {
         EliminateConfig config = EliminateConfig.getInstance();
         if (!config.enabled) return false;
         
-        if (config.debugMode) {
-            EliminateClient.TOTAL_CHECKED++;
-            EliminateClient.HUD_TOTAL_CHECKED++;
-        }
+        double cameraX = client.player.getX();
+        double cameraY = client.player.getEyeY();
+        double cameraZ = client.player.getZ();
 
         long currentTime = client.world.getTime();
         boolean shouldUpdate;
@@ -60,34 +65,74 @@ public class CullingUtils {
                 resetCache();
                 cachedWorld = client.world;
                 isNether = client.world.getRegistryKey().getValue().getPath().contains("nether");
+                hasCeiling = client.world.getDimension().hasCeiling();
             }
             lastCacheTime = currentTime;
-            int playerX = MathHelper.floor(client.player.getX());
-            int playerZ = MathHelper.floor(client.player.getZ());
-            cachedPlayerSurfaceY = getReliableSurfaceY(client.world, playerX, playerZ);
-            cachedPlayerUnderground = client.player.getEyeY() < (double) (cachedPlayerSurfaceY - 4);
             
-            if (isNether) {
-                cachedPlayerCeilingY = 120; // Default Nether ceiling safe margin
-            }
+            // Only re-calculate surface and underground status if player moved significantly or time passed
+            double dx = cameraX - cachedPlayerX;
+            double dy = cameraY - cachedPlayerY;
+            double dz = cameraZ - cachedPlayerZ;
+            
+            float currentYaw = client.player.getYaw();
+            float currentPitch = client.player.getPitch();
+            boolean rotationChanged = currentYaw != lastYaw || currentPitch != lastPitch;
 
-            // Calculate FOV threshold: 
-            // Default FOV is usually 70. We add a 20-degree safety margin.
-            double fov = client.options.getFov().getValue();
-            double halfFovRad = Math.toRadians((fov + 20) / 2.0);
-            fovCosineThreshold = Math.cos(halfFovRad);
+            if (dx*dx + dy*dy + dz*dz > 0.25 || shouldUpdate || rotationChanged) {
+                cachedPlayerX = cameraX;
+                cachedPlayerY = cameraY;
+                cachedPlayerZ = cameraZ;
+                
+                int px = MathHelper.floor(cameraX);
+                int pz = MathHelper.floor(cameraZ);
+                cachedPlayerSurfaceY = getReliableSurfaceY(client.world, px, pz);
+                
+                // 更严格的地下判定：必须在地表 12 格以下，且无法直接看到天空
+                boolean skyVisible = client.world.isSkyVisible(new BlockPos(px, MathHelper.floor(cameraY), pz));
+                cachedPlayerUnderground = !skyVisible && cameraY < (double) (cachedPlayerSurfaceY - 12);
+                
+                if (isNether) {
+                    cachedPlayerCeilingY = 120;
+                }
 
-            if (config.debugMode) {
-                EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
-                EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
+                int renderDistance = client.options.getClampedViewDistance();
+                cachedReservedHeight = Math.min(config.reservedHeight, renderDistance) << 4;
+
+                // Rotation-aware FOV logic
+                float dyaw = Math.abs(currentYaw - lastYaw);
+                if (dyaw > 180) dyaw = 360 - dyaw;
+                float dpitch = Math.abs(currentPitch - lastPitch);
+                double rotationSpeed = Math.sqrt(dyaw * dyaw + dpitch * dpitch);
+
+                if (rotationSpeed > smoothedRotationFactor) {
+                    smoothedRotationFactor = rotationSpeed;
+                } else {
+                    smoothedRotationFactor *= 0.85; // Faster decay for better precision when stable
+                }
+                lastYaw = currentYaw;
+                lastPitch = currentPitch;
+
+                double baseFov = config.fovAngle;
+                // Add extra margin for fast rotation to prevent flickering
+                double dynamicMargin = Math.min(50.0, smoothedRotationFactor * 3.0);
+                double totalFov = baseFov + dynamicMargin;
+                
+                double halfFovRad = Math.toRadians(totalFov / 2.0);
+                fovCosineThreshold = Math.cos(halfFovRad);
+
+                if (config.debugMode) {
+                    EliminateClient.debugCachedSurfaceY = cachedPlayerSurfaceY;
+                    EliminateClient.debugCachedUnderground = cachedPlayerUnderground;
+                }
             }
         }
 
-        double cameraX = client.player.getX();
-        double cameraY = client.player.getEyeY();
-        double cameraZ = client.player.getZ();
+        if (config.debugMode) {
+            EliminateClient.TOTAL_CHECKED++;
+            EliminateClient.HUD_TOTAL_CHECKED++;
+        }
 
-        // 1. Transparency Awareness (Water, Glass, etc.)
+        // 1. Transparency Awareness
         if (config.transparencyAwareness) {
             if (isChunkTransparent(client.world, chunkX, chunkY, chunkZ)) {
                 return false; 
@@ -97,12 +142,20 @@ public class CullingUtils {
         // 2. FOV Culling
         if (config.fovCullingEnabled) {
             Vec3d look = client.player.getRotationVec(1.0F);
-            Vec3d toBox = box.getCenter().subtract(cameraX, cameraY, cameraZ).normalize();
-            double dot = look.dotProduct(toBox);
+            double centerX = box.minX + 8.0;
+            double centerY = box.minY + 8.0;
+            double centerZ = box.minZ + 8.0;
             
-            if (dot < fovCosineThreshold) {
-                double distSq = box.getCenter().squaredDistanceTo(cameraX, cameraY, cameraZ);
-                if (distSq > 256) {
+            double dx = centerX - cameraX;
+            double dy = centerY - cameraY;
+            double dz = centerZ - cameraZ;
+            double distSq = dx*dx + dy*dy + dz*dz;
+            
+            if (distSq > 256) {
+                double invDist = 1.0 / Math.sqrt(distSq);
+                double dot = (look.x * dx + look.y * dy + look.z * dz) * invDist;
+                
+                if (dot < fovCosineThreshold) {
                     if (config.debugMode) {
                         EliminateClient.CULLED_COUNT++;
                         EliminateClient.CULLED_FOV++;
@@ -114,90 +167,59 @@ public class CullingUtils {
             }
         }
 
-        // 3. Aggressive Mountain Culling / Nether Ceiling Culling
-        if (config.aggressiveMountainCulling) {
-            if (isNether) {
-                // If in Nether, cull chunks above ceiling if player is below
-                if (cameraY < 110 && box.minY > 128) {
-                    if (config.debugMode) {
-                        EliminateClient.CULLED_COUNT++;
-                        EliminateClient.CULLED_MOUNTAIN++;
-                        EliminateClient.HUD_CULLED_COUNT++;
-                        EliminateClient.HUD_CULLED_MOUNTAIN++;
-                    }
-                    return true;
-                }
-            } else if (cachedPlayerUnderground) {
-                int thickness = cachedPlayerSurfaceY - (int)cameraY;
-                if (thickness > 12) {
-                    if (box.minY > (double) (cachedPlayerSurfaceY + 4)) {
-                        double horizontalDistSq = MathHelper.square(box.getCenter().x - cameraX) + MathHelper.square(box.getCenter().z - cameraZ);
-                        if (horizontalDistSq > 1024) {
-                            if (config.debugMode) {
-                                EliminateClient.CULLED_COUNT++;
-                                EliminateClient.CULLED_MOUNTAIN++;
-                                EliminateClient.HUD_CULLED_COUNT++;
-                                EliminateClient.HUD_CULLED_MOUNTAIN++;
-                            }
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        // 4. Standard Vertical Culling
-        long key = (((long) chunkX) & 0xffffffffL) | ((((long) chunkZ) & 0xffffffffL) << 32);
+        // Pre-calculate surfaceY for culling logic
+        long key = ((long) chunkX << 32) | (chunkZ & 0xFFFFFFFFL);
         int surfaceY = cachedHeights.get(key);
         if (surfaceY == -1) {
             surfaceY = getReliableSurfaceY(client.world, (chunkX << 4) + 8, (chunkZ << 4) + 8);
             cachedHeights.put(key, surfaceY);
         }
 
-        int cullingDist = config.cullingDistance;
-        if (isNether) {
-            // Nether specific: cull if too far above or below
-            double diffY = Math.abs(box.getCenter().y - cameraY);
-            if (diffY > (double) (cullingDist + 32)) {
-                if (config.debugMode) {
-                    EliminateClient.CULLED_COUNT++;
-                    EliminateClient.CULLED_VERTICAL++;
-                    EliminateClient.HUD_CULLED_COUNT++;
-                    EliminateClient.HUD_CULLED_VERTICAL++;
+        // 3. Aggressive Mountain Culling / Nether Ceiling Culling
+        if (config.aggressiveMountainCulling) {
+            if (isNether || (hasCeiling && cameraY < 120)) {
+                if (cameraY < 110 && box.minY > 128) {
+                    markCulled(config, "mountain");
+                    return true;
                 }
+            } else if (cachedPlayerUnderground) {
+                // 使用区块自身的表面高度判定，防止在山脚下误剔除山顶
+                if (box.minY > (double) (surfaceY + 8)) {
+                    double dx = (box.minX + 8.0) - cameraX;
+                    double dz = (box.minZ + 8.0) - cameraZ;
+                    if (dx*dx + dz*dz > 1024) {
+                        markCulled(config, "mountain");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // 4. Standard Vertical Culling
+        if (isNether) {
+            double diffY = Math.abs((box.minY + 8.0) - cameraY);
+            if (diffY > (double) (cachedReservedHeight + 32)) {
+                markCulled(config, "vertical");
                 return true;
             }
             return false;
         }
 
         if (!cachedPlayerUnderground) {
-            if (box.maxY < (double) (surfaceY - cullingDist)) {
-                if (config.debugMode) {
-                    EliminateClient.CULLED_COUNT++;
-                    EliminateClient.CULLED_VERTICAL++;
-                    EliminateClient.HUD_CULLED_COUNT++;
-                    EliminateClient.HUD_CULLED_VERTICAL++;
-                }
+            // 玩家在户外时，垂直剔除应极其保守，防止剔除山体中的矿洞入口
+            if (box.maxY < (double) (surfaceY - 64) && box.maxY < cameraY - 64) {
+                markCulled(config, "vertical");
                 return true;
             }
         } else {
-            double diffY = Math.abs(box.getCenter().y - cameraY);
-            if (diffY > (double) cullingDist) {
-                if (config.debugMode) {
-                    EliminateClient.CULLED_COUNT++;
-                    EliminateClient.CULLED_VERTICAL++;
-                    EliminateClient.HUD_CULLED_COUNT++;
-                    EliminateClient.HUD_CULLED_VERTICAL++;
-                }
+            double diffY = Math.abs((box.minY + 8.0) - cameraY);
+            if (diffY > (double) cachedReservedHeight) {
+                markCulled(config, "vertical");
                 return true;
             }
-            if (cameraY < (double) (surfaceY - 8) && box.minY > (double) (surfaceY + 2)) {
-                if (config.debugMode) {
-                    EliminateClient.CULLED_COUNT++;
-                    EliminateClient.CULLED_VERTICAL++;
-                    EliminateClient.HUD_CULLED_COUNT++;
-                    EliminateClient.HUD_CULLED_VERTICAL++;
-                }
+            // 玩家在地下时，剔除地表以上的区块（此时玩家无法通过地层看到天空）
+            if (cameraY < (double) (surfaceY - 16) && box.minY > (double) (surfaceY + 4)) {
+                markCulled(config, "vertical");
                 return true;
             }
         }
@@ -205,8 +227,22 @@ public class CullingUtils {
         return false;
     }
 
+    private static void markCulled(EliminateConfig config, String type) {
+        if (config.debugMode) {
+            EliminateClient.CULLED_COUNT++;
+            EliminateClient.HUD_CULLED_COUNT++;
+            if ("mountain".equals(type)) {
+                EliminateClient.CULLED_MOUNTAIN++;
+                EliminateClient.HUD_CULLED_MOUNTAIN++;
+            } else if ("vertical".equals(type)) {
+                EliminateClient.CULLED_VERTICAL++;
+                EliminateClient.HUD_CULLED_VERTICAL++;
+            }
+        }
+    }
+
     private static boolean isChunkTransparent(ClientWorld world, int cx, int cy, int cz) {
-        long key = (((long) cx) & 0xffffffL) | ((((long) cy) & 0xffffffL) << 24) | ((((long) cz) & 0xffffffL) << 48);
+        long key = ((long) cx & 0xFFFFFFL) | (((long) cy & 0xFFFFFFL) << 24) | (((long) cz & 0xFFFFFFL) << 48);
         if (cachedTransparency.containsKey(key)) return cachedTransparency.get(key);
 
         Chunk chunk = world.getChunk(cx, cz, ChunkStatus.FULL, false);
@@ -218,14 +254,17 @@ public class CullingUtils {
         int startZ = cz << 4;
 
         BlockPos.Mutable pos = new BlockPos.Mutable();
-        int[] samples = {0, 8, 15};
+        // Sampling strategy: center, corners, and face centers
+        int[] samples = {0, 7, 15}; 
         outer:
-        for (int x : samples) {
-            for (int y : samples) {
+        for (int y : samples) {
+            for (int x : samples) {
                 for (int z : samples) {
                     pos.set(startX + x, startY + y, startZ + z);
                     BlockState state = chunk.getBlockState(pos);
-                    if (state.isOf(Blocks.WATER) || state.isOf(Blocks.GLASS) || state.isOf(Blocks.ICE) || !state.isOpaque()) {
+                    // Fast path for air and common transparent blocks
+                    if (state.isAir()) continue;
+                    if (!state.isOpaque() || state.isOf(Blocks.WATER) || state.isOf(Blocks.GLASS)) {
                         transparent = true;
                         break outer;
                     }

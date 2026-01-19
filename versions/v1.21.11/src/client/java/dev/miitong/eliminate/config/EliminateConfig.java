@@ -14,7 +14,8 @@ public class EliminateConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public boolean enabled = true;
-    public int cullingDistance = 32;
+    public int reservedHeight = 2;
+    public int fovAngle = 110;
     public boolean debugMode = false;
     public int updateSpeed = 20;
     public boolean syncWithSodium = false;

@@ -3,7 +3,7 @@
   "config.eliminate.category.general": "常规设置",
   "config.eliminate.category.advanced": "高级设置",
   "config.eliminate.option.enabled": "启用垂直剔除",
-  "config.eliminate.option.cullingDistance": "垂直剔除距离 (Blocks)",
+  "config.eliminate.option.reservedHeight": "垂直剔除保留高度 (Chunks)",
   "config.eliminate.option.debugMode": "调试模式",
   "config.eliminate.option.updateSpeed": "更新频率 (Ticks)",
   "config.eliminate.option.updateSpeed.tooltip": "调整地表高度检测的更新周期。单位为 Ticks (1秒=20Ticks)。默认 20 为每 Tick 更新一次。",
@@ -11,6 +11,8 @@
   "config.eliminate.option.syncWithSodium.tooltip": "开启后，剔除逻辑将直接挂钩 Sodium 的遮挡查询渲染帧，不再手动管理更新频率。这可以提供最精确的同步剔除效果。",
   "config.eliminate.option.fovCullingEnabled": "启用视野剔除 (FOV)",
   "config.eliminate.option.fovCullingEnabled.tooltip": "基于玩家实时视野（FOV）动态剔除视线外的区块。相比背面剔除更精确且更激进。",
+  "config.eliminate.option.fovAngle": "视野剔除角度",
+  "config.eliminate.option.fovAngle.tooltip": "设置视野剔除的检测角度范围。角度越大越保守（保留更多区块），角度越小越激进。建议 110-130 以获得最佳平衡。",
   "config.eliminate.option.aggressiveMountainCulling": "山体激进剔除",
   "config.eliminate.option.aggressiveMountainCulling.tooltip": "当玩家位于厚重地层下方时，自动剔除被地形完全遮挡的地表区块。显著提升复杂地形下的性能。",
   "config.eliminate.option.transparencyAwareness": "透明度感知",
@@ -19,8 +21,8 @@
   "hud.eliminate.fov": "FOV 剔除: ",
   "hud.eliminate.vert": "垂直剔除: ",
   "hud.eliminate.mountain": "遮挡剔除: ",
-  "hud.eliminate.y_info": "Y: ",
-  "hud.eliminate.underground": "地下状态: ",
+    "hud.eliminate.y_info": "Y: %d (地表: %d)",
+    "hud.eliminate.underground": "地下状态: ",
   "hud.eliminate.disabled": "已禁用",
   "hud.eliminate.actionbar": "剔除统计: "
 }
